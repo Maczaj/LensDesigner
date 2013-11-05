@@ -1,0 +1,18 @@
+# compile files
+bin/*
+target/*
+
+# just in case
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+*.iml
+
+# IDE
+.idea/*
+.settings/*
+
+/target
