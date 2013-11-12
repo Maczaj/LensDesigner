@@ -1,14 +1,11 @@
-package mma.pszt.controller;/**
- * Created with IntelliJ IDEA.
- * User: maczaj
- * Date: 09.11.13
- * Time: 17:07
- * To change this template use File | Settings | File Templates.
- */
+package mma.pszt.controller;
 
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import mma.pszt.model.Lens;
+import mma.pszt.utils.Parameters;
 import mma.pszt.view.View;
 import mma.pszt.model.Model;
 import mma.pszt.Event;
@@ -18,19 +15,29 @@ import org.apache.log4j.Logger;
 public class Controller {
 	
 	//view
-	private final View viewer;
+	private final View view;
 	private final Model model;
-	private final BlockingQueue<Event> blockingQueue;
-	
-	
+
     private static final Logger logger = Logger.getLogger(Controller.class.getName());
     
     
     public Controller()
     {
-    	this.viewer = new View();
+    	this.view = new View();
     	this.model = new Model();
-    	this.blockingQueue = new LinkedBlockingQueue<Event>();;
+    }
+
+    public void start()
+    {
+        final Parameters params = view.setParameters();
+        model.setParameters(params);
+
+        while(true)
+        {
+            List<Lens> listLens = model.getListLens();
+            view.setListLens(listLens);
+            view.drawView();
+        }
     }
 
 }

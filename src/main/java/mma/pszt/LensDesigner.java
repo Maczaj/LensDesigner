@@ -1,13 +1,8 @@
 package mma.pszt;
 
 import mma.pszt.controller.Controller;
-import mma.pszt.model.Lens;
-import mma.pszt.model.LensSegment;
-
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 
-import java.util.List;
 
 /**
  * Main class to run the app.
@@ -20,5 +15,8 @@ public class LensDesigner
     public static void main( String[] args )
     {
     	Controller aa = new Controller();
+
+        logger.debug("Startujemmmmmmyyyyyyyy");
+        aa.start();
     }
 }

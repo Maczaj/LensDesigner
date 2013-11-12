@@ -26,6 +26,9 @@ public class SimulationPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g){
+
+        super.paintComponent(g);
+
         Lens lens = lenses.get(lensToDraw);
 
         List<LensSegment> leftSegs = lens.getLeftSegments();
