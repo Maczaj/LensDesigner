@@ -6,6 +6,8 @@ package mma.pszt.utils;/**
  * To change this template use File | Settings | File Templates.
  */
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.apache.log4j.Logger;
 
 import java.awt.*;
@@ -13,6 +15,8 @@ import java.awt.*;
 /**
  * Class to represent a line.
  */
+@AllArgsConstructor
+@Getter
 public class Line {
     private static final Logger logger = Logger.getLogger(Line.class.getName());
 
@@ -20,6 +24,11 @@ public class Line {
     private double b;
     private double c;
 
+    /**
+     * Crates new line based on two points.
+     * @param p1 starting point
+     * @param p2 ending point
+     */
     public Line(Point p1 , Point p2){
 
         //this means angle with OX is 90 degrees

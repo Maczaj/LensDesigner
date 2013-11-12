@@ -1,7 +1,11 @@
 package mma.pszt;
 
 import mma.pszt.controller.Controller;
-import org.apache.log4j.Logger;
+import mma.pszt.model.Lens;
+import mma.pszt.model.LensSegment;
+
+import mma.pszt.utils.Line;
+import org.apache.log4j.BasicConfigurator;import org.apache.log4j.Logger;
 
 
 /**

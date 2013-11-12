@@ -7,17 +7,17 @@ import mma.pszt.LensDesigner;
 import mma.pszt.utils.Parameters;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 public class Model {
-	
+
 	private static final Logger logger = Logger.getLogger(LensDesigner.class.getName());
     private Parameters parameters;
     private List<Lens> listLens;
 
     public Model()
 	{
-    	//na razie lipny log4j
-    	BasicConfigurator.configure();
+        PropertyConfigurator.configure("log");
 
     	Lens lens = new Lens();
 
