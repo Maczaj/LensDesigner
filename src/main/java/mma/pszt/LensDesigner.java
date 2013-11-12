@@ -6,6 +6,7 @@ import mma.pszt.model.LensSegment;
 
 import mma.pszt.utils.Line;
 import org.apache.log4j.BasicConfigurator;import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 
 /**
@@ -18,6 +19,7 @@ public class LensDesigner
 
     public static void main( String[] args )
     {
+        PropertyConfigurator.configure("log4j.properties");
     	Controller aa = new Controller();
 
         logger.debug("Startujemmmmmmyyyyyyyy");

@@ -17,9 +17,7 @@ public class Model {
 
     public Model()
 	{
-        PropertyConfigurator.configure("log");
-
-    	Lens lens = new Lens();
+       	Lens lens = new Lens();
 
         Lens anotherLens = new Lens(lens , 0.15);
 
