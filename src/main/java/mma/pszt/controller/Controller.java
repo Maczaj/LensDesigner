@@ -30,6 +30,12 @@ public class Controller {
     public void start()
     {
         final Parameters params = view.setParameters();
+
+        System.out.println(params.getFocusingAccuracy());
+        System.out.println(params.getNumberOfPoints());
+        System.out.println(params.getNumberOfRays());
+        System.out.println(params.getRefractiveIndex());
+
         model.setParameters(params);
 
         while(true)
