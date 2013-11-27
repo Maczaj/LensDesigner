@@ -8,9 +8,8 @@ package mma.pszt.utils;/**
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import mma.pszt.model.Point;
 import org.apache.log4j.Logger;
-
-import java.awt.*;
 
 /**
  * Class to represent a line.

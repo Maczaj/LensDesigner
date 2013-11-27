@@ -7,10 +7,8 @@ package mma.pszt.model;/**
  */
 
 import lombok.Getter;
-import lombok.val;
 import org.apache.log4j.Logger;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -23,15 +21,14 @@ public class Lens {
     // TODO trzeba określić czym są te stałe (piksele, centymetry, chuj wie?)
     private static final int BASE_DISTANCE = 15;
     private static final int POINTS_QUANTITY = 10;
-    private static final int LENS_HEIGH = 100;
-    private static final int[] VALUES = {-1, 1} ;
+    private static final int LENS_HEIGHT = 100;
 
     //will be used many times, so static
-    private static final Random rand = new Random(System.currentTimeMillis());
+    private final Random rand = new Random(System.currentTimeMillis());
 
     //do rozważenia, czy punkty trzymać jako oddzielne struktury
-    @Getter private int[] leftSidePoints;
-    @Getter private int[] rightSidePoints;
+    @Getter private final int[] leftSidePoints;
+    @Getter private final int[] rightSidePoints;
 
     /**
      * Default constructor - creates flat lens.
@@ -51,7 +48,7 @@ public class Lens {
      * @param otherLens lens to mutate from
      * @param mutationRate level of mutation (must be between 0 and 1)
      */
-    public Lens(final Lens otherLens , double mutationRate){
+    public Lens(final Lens otherLens, final double mutationRate){
         if(mutationRate < 0 || mutationRate > 1){
             throw new IllegalArgumentException("mutationRate must be between 0 and 1");
         }
@@ -63,17 +60,17 @@ public class Lens {
         //now mutate each point separately
         int i = 0;
         for(int point : otherLens.leftSidePoints){                                       //how to avoid magic number?
-           leftSidePoints[i] = (point + (int)(mutationRate * point * VALUES[rand.nextInt(2)]));
+           leftSidePoints[i] = (point + (int)(mutationRate * point * rand.nextInt(2) * 2 - 1));
             ++i;
         }
         i = 0;
         for(int point : otherLens.rightSidePoints){                                     //how to avoid magic number?
-            rightSidePoints[i] = (point + (int)(mutationRate * point * VALUES[rand.nextInt(2)]));
+            rightSidePoints[i] = (point + (int)(mutationRate * point * rand.nextInt(2) * 2 - 1));
             i++;
         }
     }
 
-        @Override
+    @Override
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
@@ -81,22 +78,19 @@ public class Lens {
         for(Integer point : leftSidePoints){
             sb.append(point+" ");
         }
-
         sb.append("\\ ");
-
         for(Integer point : rightSidePoints){
             sb.append(point + " ");
         }
-
         return sb.toString();
     }
 
     /**
      * @return list of lens left-side segments.
      */
-    public final List<LensSegment> getLeftSegments(){
+    public List<LensSegment> getLeftSegments(){
         List<LensSegment> lst = new ArrayList<LensSegment>();
-        double stepSize = (double) LENS_HEIGH / (double) POINTS_QUANTITY ;
+        double stepSize = (double) LENS_HEIGHT / (double) POINTS_QUANTITY ;
 
         for (int i = 0 ; i < this.leftSidePoints.length - 1 ; ++i){
             Point first = new Point(leftSidePoints[i] , (int) (i*stepSize) );
@@ -110,9 +104,9 @@ public class Lens {
     /**
      * @return list of lens right-side segments.
      */
-    public final List<LensSegment> getRightSegments(){
+    public List<LensSegment> getRightSegments(){
         List<LensSegment> lst = new ArrayList<LensSegment>();
-        double stepSize = (double) LENS_HEIGH / (double) POINTS_QUANTITY ;
+        double stepSize = (double) LENS_HEIGHT / (double) POINTS_QUANTITY ;
 
         for (int i = 0 ; i < this.rightSidePoints.length - 1 ; ++i){
             Point first = new Point(rightSidePoints[i] , (int) (i*stepSize) );
@@ -121,5 +115,10 @@ public class Lens {
             lst.add(new LensSegment(first, second));
         }
         return lst;
+    }
+
+    public int getScore(){
+
+        return -1;
     }
 }

@@ -11,8 +11,6 @@ import lombok.Setter;
 import mma.pszt.utils.Line;
 import org.apache.log4j.Logger;
 
-import java.awt.*;
-
 
 /**
  * Class to represent single segment of Lens.
