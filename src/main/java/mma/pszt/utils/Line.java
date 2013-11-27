@@ -8,9 +8,8 @@ package mma.pszt.utils;/**
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import mma.pszt.model.Point;
 import org.apache.log4j.Logger;
-
-import java.awt.*;
 
 /**
  * Class to represent a line.
@@ -35,11 +34,11 @@ public class Line {
         if(p2.getX() == p1.getX()){
             this.a = 1;
             this.b = 0;
-            this.c = p2.getX();
+            this.c = -p2.getX();
         }
         else{
             this.a = (double)(p1.getY()-p2.getY()) / (p1.getX() - p2.getX());
-            this.b = 1;
+            this.b = -1;
             this.c = p2.getY() - this.a * p2.getX();
         }
     }
