@@ -1,6 +1,7 @@
 package mma.pszt.model;
 
 import mma.pszt.utils.Line;
+import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 
 /**

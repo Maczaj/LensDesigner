@@ -2,6 +2,7 @@ package mma.pszt.model;
 
 import mma.pszt.utils.Line;
 import org.apache.log4j.PropertyConfigurator;
+import mma.pszt.utils.Point;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
