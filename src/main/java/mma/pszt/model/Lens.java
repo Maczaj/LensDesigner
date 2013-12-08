@@ -25,12 +25,15 @@ public class Lens {
     @Getter private final int[] leftSidePoints;
     @Getter private final int[] rightSidePoints;
 
+    @Getter private int noGeneration;
+
     /**
      * Default constructor - creates flat lens.
      */
     public Lens(){
         this.leftSidePoints = new int[POINTS_QUANTITY];
         this.rightSidePoints = new int[POINTS_QUANTITY];
+        noGeneration = 0;
 
         for(int i = 0 ; i < POINTS_QUANTITY ; ++i){
             this.leftSidePoints[i] = BASE_DISTANCE;
@@ -43,7 +46,7 @@ public class Lens {
      * @param otherLens lens to mutate from
      * @param mutationRate level of mutation (must be between 0 and 1)
      */
-    public Lens(final Lens otherLens, final double mutationRate){
+    public Lens(final Lens otherLens, final double mutationRate, final int noGeneration){
         if(mutationRate < 0 || mutationRate > 1){
             throw new IllegalArgumentException("mutationRate must be between 0 and 1");
         }
@@ -51,6 +54,8 @@ public class Lens {
         //copy points first
         this.rightSidePoints = new int[POINTS_QUANTITY];
         this.leftSidePoints = new int[POINTS_QUANTITY];
+
+        this.noGeneration = noGeneration;
 
         //now mutate each point separately
         int i = 0;
@@ -69,7 +74,7 @@ public class Lens {
     public String toString(){
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Lens: ");
+        sb.append("Lens (generation: "+ noGeneration +"): ");
         for(Integer point : leftSidePoints){
             sb.append(point+" ");
         }
