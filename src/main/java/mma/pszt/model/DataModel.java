@@ -1,9 +1,9 @@
 package mma.pszt.model;
 
+import lombok.Getter;
 import mma.pszt.utils.Parameters;
 
 import java.util.Set;
-import lombok.*;
 
 /**
  * @author Maciej Jagiello

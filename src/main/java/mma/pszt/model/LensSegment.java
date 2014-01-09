@@ -24,15 +24,15 @@ class LensSegment {
     private Point startingPoint;
     private Point endingPoint;
 
-    LensSegment(Point first, Point second){
+    LensSegment(Point first, Point second) {
         this.startingPoint = first;
         this.endingPoint = second;
         logger.debug("Creating segment - from " + startingPoint + " to " + endingPoint);
     }
 
 
-    Line getAsLineEquation(){
-         return new Line(this.startingPoint , this.endingPoint);
+    Line getAsLineEquation() {
+        return new Line(this.startingPoint, this.endingPoint);
     }
 
 //    @Override

@@ -1,25 +1,20 @@
 package mma.pszt.model;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import mma.pszt.LensDesigner;
-
 import mma.pszt.utils.Parameters;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
+
+import java.util.*;
 
 public class Model {
 
-	private static final Logger logger = Logger.getLogger(LensDesigner.class.getName());
+    private static final Logger logger = Logger.getLogger(LensDesigner.class.getName());
     private final Parameters parameters;
     private List<Lens> listLens;
 
     public Model() {
         parameters = new Parameters(0, 0, 0, 0.0, 0.0, 0.0);
-	}
+    }
 
     public Model(Parameters parameters) {
 
@@ -33,7 +28,7 @@ public class Model {
 
         Set<Lens> selectedBestLens = new HashSet<>();
 
-        if (prevGeneration.isEmpty()){
+        if (prevGeneration.isEmpty()) {
             for (int i = 0; i < parameters.getNumberOfLens(); ++i) {
                 selectedBestLens.add(new Lens());
             }
@@ -47,10 +42,18 @@ public class Model {
     }
 
     /**
-     * selekcja
+     * selekcja. generation.toArray().sortBy(getScore) and return best half
      */
-    private Set<Lens> selectBestLens(Set<Lens> generation) {
-        //generation.toArray() sortBy getScore get best half and return
+    public HashSet<Lens> selectBestLens(Set<Lens> generation) {
+        List arrayOfLens = new ArrayList(generation);
+
+        Collections.sort(arrayOfLens, new Comparator<Lens>() {
+            @Override
+            public int compare(Lens lens, Lens lens2) {
+                return Integer.valueOf(lens.getScore()).compareTo(lens2.getScore());
+            }
+        });
+        return new HashSet<Lens>(arrayOfLens.subList(0, Math.round(generation.size() / 2)));
     }
 
     /**
@@ -58,6 +61,7 @@ public class Model {
      */
     private Set<Lens> miscegenation(Set<Lens> generation) {
         //
+        return new HashSet<>();
     }
 
     public List<Lens> getListLens() {
