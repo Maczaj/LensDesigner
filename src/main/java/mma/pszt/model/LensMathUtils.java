@@ -39,4 +39,25 @@ abstract class LensMathUtils {
 
         return new Point(x, y);
     }
+
+    /**
+     *
+     * @param l1 line which is inciding
+     * @param l2
+     * @return angle in radians
+     */
+    public static double calculateIncidenceAngle(Line l1, Line l2){
+        logger.debug("Attempting to caltulate incidence angle " + l1.toString() + " => " + l2.toString());
+
+        if( ( l1.getA()*l2.getB() - l2.getA()*l1.getB() ) == 0){
+            throw new IllegalArgumentException("Lines are parallel!");
+        }
+        if( ( l1.getA()*l2.getA() + l1.getB()*l2.getB() ) == 0){
+            return 0.0;
+        }
+
+        Line normal = new Line ( calculateIntersectingLines( l1 , l2 ) , -l2.getB() , l2.getA() );
+
+      return Math.abs( Math.atan(  ( l1.getA()*normal.getB() - normal.getA() * l1.getB() ) / ( l1.getA() * normal.getA() + l1.getB() * normal.getB()) ) );
+    }
 }
