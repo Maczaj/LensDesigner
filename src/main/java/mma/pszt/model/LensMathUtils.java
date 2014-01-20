@@ -1,6 +1,7 @@
 package mma.pszt.model;
 
 import mma.pszt.utils.Line;
+import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 
 /**
@@ -30,11 +31,11 @@ abstract class LensMathUtils {
         double y;
         // the same way to calculate intersect point, but without dividing by zero
         if (a2 != 0) {
-            x = -((c2/a2)+b2*(a1*c2-a2*c1)/(a2*(a2*b1-a1*b2)));
-            y = (a1*c2-a2*c1)/(a2*b1-a1*b2);
+            x = -((c2 / a2) + b2 * (a1 * c2 - a2 * c1) / (a2 * (a2 * b1 - a1 * b2)));
+            y = (a1 * c2 - a2 * c1) / (a2 * b1 - a1 * b2);
         } else {
-            x = -((c1/a1)+b1*(a2*c1-a1*c2)/(a1*(a1*b2-a2*b1)));
-            y = (a2*c1-a1*c2)/(a1*b2-a2*b1);
+            x = -((c1 / a1) + b1 * (a2 * c1 - a1 * c2) / (a1 * (a1 * b2 - a2 * b1)));
+            y = (a2 * c1 - a1 * c2) / (a1 * b2 - a2 * b1);
         }
 
         return new Point(x, y);

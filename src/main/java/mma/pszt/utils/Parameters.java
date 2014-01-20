@@ -1,17 +1,18 @@
 package mma.pszt.utils;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * @author Arkadiusz Szlachetka
  */
-
+@Getter @Setter @AllArgsConstructor
 public class Parameters {
 
-    @Getter @Setter Integer numberOfPoints;
-    @Getter @Setter Integer numberOfRays;
-    @Getter @Setter Double refractiveIndex;
-    @Getter @Setter Double focusingAccuracy;
-
+    private Integer numberOfPoints;
+    private Integer numberOfRays;
+    private Double refractiveIndex;
+    private Double focusingAccuracy;
+    private Double mutationRate;
 }

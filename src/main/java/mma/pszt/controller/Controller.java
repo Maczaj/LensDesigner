@@ -36,12 +36,12 @@ public class Controller {
         System.out.println(params.getNumberOfRays());
         System.out.println(params.getRefractiveIndex());
 
-        model.setParameters(params);
+//        model.setParameters(params);
 
         while(true)
         {
-            List<Lens> listLens = model.getListLens();
-            view.setListLens(listLens);
+//            List<Lens> listLens = model.getListLens();
+//            view.setListLens(listLens);
             view.drawView();
         }
     }

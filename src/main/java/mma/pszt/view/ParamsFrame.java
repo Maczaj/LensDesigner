@@ -23,7 +23,7 @@ public class ParamsFrame {
 
 	JPanel jPanelTextFieldOne = new JPanel (new FlowLayout());
     JPanel jPanelTextFieldTwo = new JPanel (new FlowLayout());
-    JPanel jPanelTexyFieldThree = new JPanel (new FlowLayout());
+    JPanel jPanelTextFieldThree = new JPanel (new FlowLayout());
     JPanel jPanelTextFieldFour = new JPanel (new FlowLayout());
     JPanel jPanelTextFieldError = new JPanel (new FlowLayout());
 
@@ -33,7 +33,7 @@ public class ParamsFrame {
     JLabel l4 = new JLabel("Refractive Index:       ");
     JLabel lError = new JLabel("Wrong Param");
 
-    final Parameters param = new Parameters();
+    final Parameters param = new Parameters(0,0,0.0,0.0,0.0);
 
     public ParamsFrame()
 	    {
@@ -41,8 +41,8 @@ public class ParamsFrame {
     	    jPanelTextFieldOne.add(textFieldOne);
             jPanelTextFieldTwo.add(l2);
             jPanelTextFieldTwo.add(textFieldTwo);
-            jPanelTexyFieldThree.add(l3);
-            jPanelTexyFieldThree.add(textFieldThree);
+            jPanelTextFieldThree.add(l3);
+            jPanelTextFieldThree.add(textFieldThree);
             jPanelTextFieldFour.add(l4);
             jPanelTextFieldFour.add(textFieldFour);
             jPanelTextFieldError.add(lError);
@@ -50,7 +50,7 @@ public class ParamsFrame {
             jPanel.add(buttonGo);
             Frame1.add(jPanelTextFieldOne);
             Frame1.add(jPanelTextFieldTwo);
-            Frame1.add(jPanelTexyFieldThree);
+            Frame1.add(jPanelTextFieldThree);
             Frame1.add(jPanelTextFieldFour);
             Frame1.add(jPanelTextFieldError);
             jPanelTextFieldError.setVisible(false);

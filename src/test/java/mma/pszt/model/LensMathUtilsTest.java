@@ -2,6 +2,7 @@ package mma.pszt.model;
 
 import mma.pszt.utils.Line;
 import org.apache.log4j.PropertyConfigurator;
+import mma.pszt.utils.Point;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -21,7 +22,7 @@ public class LensMathUtilsTest {
     }
 
     @Test
-    public void testTrivial(){
+    public void testTrivial() {
         Line l1 = Mockito.mock(Line.class);
         Line l2 = Mockito.mock(Line.class);
         Mockito.when(l1.getA()).thenReturn(1.0);
@@ -34,7 +35,7 @@ public class LensMathUtilsTest {
     }
 
     @Test
-    public void testNonTrivial(){
+    public void testNonTrivial() {
         Line l1 = Mockito.mock(Line.class);
         Line l2 = Mockito.mock(Line.class);
         Mockito.when(l1.getA()).thenReturn(1.0);
@@ -47,7 +48,7 @@ public class LensMathUtilsTest {
     }
 
     @Test
-    public void testNonTrivial2(){
+    public void testNonTrivial2() {
         Line l1 = Mockito.mock(Line.class);
         Line l2 = Mockito.mock(Line.class);
         Mockito.when(l1.getA()).thenReturn(0.5);
@@ -57,15 +58,15 @@ public class LensMathUtilsTest {
         Mockito.when(l2.getB()).thenReturn(-1.0);
         Mockito.when(l2.getC()).thenReturn(2.0);
         Point one = calculateIntersectingLines(l1, l2);
-        Point two = new Point(4.0/3, 2.0/3);
+        Point two = new Point(4.0 / 3, 2.0 / 3);
         Assert.assertTrue(pointsEqualsPlusMinus(one, two, 0.01));
     }
 
     private boolean pointsEqualsPlusMinus(Point p1, Point p2, double precision) {
-        return (p1.getX() >= p2.getX()-precision)
-            && (p1.getX() <= p2.getX()+precision)
-            && (p1.getY() >= p2.getY()-precision)
-            && (p1.getY() <= p2.getY()+precision);
+        return (p1.getX() >= p2.getX() - precision)
+                && (p1.getX() <= p2.getX() + precision)
+                && (p1.getY() >= p2.getY() - precision)
+                && (p1.getY() <= p2.getY() + precision);
     }
 
     @Test

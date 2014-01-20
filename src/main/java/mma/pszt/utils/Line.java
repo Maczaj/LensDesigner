@@ -9,7 +9,7 @@ package mma.pszt.utils;/**
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import mma.pszt.model.Point;
+import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 
 /**
