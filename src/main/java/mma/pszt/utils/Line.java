@@ -8,6 +8,7 @@ package mma.pszt.utils;/**
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import mma.pszt.model.Point;
 import org.apache.log4j.Logger;
 
@@ -16,6 +17,7 @@ import org.apache.log4j.Logger;
  */
 @AllArgsConstructor
 @Getter
+@Setter
 public class Line {
     private static final Logger logger = Logger.getLogger(Line.class.getName());
 

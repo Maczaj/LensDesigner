@@ -60,4 +60,31 @@ abstract class LensMathUtils {
 
       return Math.abs( Math.atan(  ( l1.getA()*normal.getB() - normal.getA() * l1.getB() ) / ( l1.getA() * normal.getA() + l1.getB() * normal.getB()) ) );
     }
+
+    /**
+     * Calculates angle of refraction based on angle of incidence.
+     * @param incidenceAngle
+     * @param nSourceEnv refractive index of source environment.
+     * @param nDestinationEnv refractive index of destination environment.
+     * @return computed value of angle
+     */
+    public static double calculateRefractionAngle( double incidenceAngle , double nSourceEnv , double nDestinationEnv  ){
+        return Math.asin( ( nDestinationEnv * Math.sin ( incidenceAngle ) ) / nSourceEnv );
+    }
+
+    /**
+     * Calculates equation of refracted line based on refraction angle and point of refraction.
+     * @param refractionAngle angle of refraction in radians
+     * @param refractionPoint point contained by refracted line
+     * @return refracted line
+     */
+    public static Line calculateRefractedLine(double refractionAngle, Point refractionPoint){
+        double a = Math.tan( refractionAngle + Math.PI/2 );
+        double b = -1.0;
+        double c = a * refractionPoint.getY() - b * refractionPoint.getY();
+
+        return new Line(a , b ,c );
+    }
+
+
 }
