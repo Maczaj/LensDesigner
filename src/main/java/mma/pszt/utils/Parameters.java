@@ -12,7 +12,6 @@ public class Parameters {
 
     private Integer numberOfPoints;
     private Integer numberOfRays;
-    private Integer numberOfLens;
     private Double refractiveIndex;
     private Double focusingAccuracy;
     private Double mutationRate;

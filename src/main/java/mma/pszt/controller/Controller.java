@@ -40,8 +40,8 @@ public class Controller {
 
         while(true)
         {
-            List<Lens> listLens = model.getListLens();
-            view.setListLens(listLens);
+//            List<Lens> listLens = model.getListLens();
+//            view.setListLens(listLens);
             view.drawView();
         }
     }
