@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class ModelTest {
     @Test
-    public void testSelectBestLens() {
+    public void testSelectionBestHalf() {
         Lens l1 = Mockito.mock(Lens.class);
         Lens l2 = Mockito.mock(Lens.class);
         Lens l3 = Mockito.mock(Lens.class);
@@ -33,6 +33,17 @@ public class ModelTest {
         set2.add(l2);
         set2.add(l4);
         Model model = new Model();
-        Assert.assertEquals(model.selectBestLens(set1), set2);
+        Assert.assertEquals(model.selectionBestHalf(set1), set2);
+    }
+
+    @Test
+    public void testMiscegenation() {
+        Lens l1 = Mockito.mock(Lens.class);
+        Lens l2 = Mockito.mock(Lens.class);
+        Model model = new Model();
+        Set set1 = new HashSet<Lens>();
+        set1.add(l1);
+        set1.add(l2);
+        model.miscegenation(set1);
     }
 }

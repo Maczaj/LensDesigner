@@ -11,7 +11,12 @@ import java.util.Set;
 @Getter
 public class EvaluatedLens {
 
-    private Ray ray;
-    private Lens lens;
+    private final Set<Ray> rays;
+    private final Lens lens;
     private Set<Point> intersectionPoints;
+    public EvaluatedLens(final Lens lens, final Set<Ray> rays, final int score) {
+        this.lens = lens;
+        this.rays = rays;
+    }
+
 }

@@ -35,10 +35,9 @@ public class Model {
             }
             newGeneration = selectedBestLens;
         } else {
-            selectedBestLens = selectBestLens(prevGeneration);
+            selectedBestLens = selectionBestHalf(prevGeneration);
             newGeneration = miscegenation(selectedBestLens);
         }
-
 
         return newGeneration;
     }
@@ -46,7 +45,7 @@ public class Model {
     /**
      * selekcja. generation.toArray().sortBy(getScore) and return best half
      */
-    public HashSet<Lens> selectBestLens(Set<Lens> generation) {
+    public HashSet<Lens> selectionBestHalf(Set<Lens> generation) {
         List<Lens> arrayOfLens = new ArrayList<>(generation);
 
         Collections.sort(arrayOfLens, new Comparator<Lens>() {
@@ -61,7 +60,7 @@ public class Model {
     /**
      * krzyżowanie
      */
-    private Set<Lens> miscegenation(Set<Lens> generation) {
+    public Set<Lens> miscegenation(Set<Lens> generation) {
         List<Lens> arrayOfLens = new ArrayList<>(generation);
         int randIndex = (new Random()).nextInt(arrayOfLens.size());
         Lens el = arrayOfLens.get(randIndex);

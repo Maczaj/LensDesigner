@@ -74,6 +74,36 @@ public class Lens {
         }
     }
 
+    /**
+     * Creates new lens as combine from two lenses plus mutation.
+     *
+     * @param otherLens    lens to mutate from
+     * @param mutationRate level of mutation (must be between 0 and 1)
+     */
+    public Lens(final Lens lens1, final Lens lens2, final double mutationRate, final int noGeneration) {
+        if (mutationRate < 0 || mutationRate > 1) {
+            throw new IllegalArgumentException("mutationRate must be between 0 and 1");
+        }
+
+        //copy points first
+        this.rightSidePoints = new int[POINTS_QUANTITY];
+        this.leftSidePoints = new int[POINTS_QUANTITY];
+
+        this.noGeneration = noGeneration;
+
+        //now mutate each point separately
+        int i = 0;
+        for (int point : otherLens.leftSidePoints) {                                       //how to avoid magic number?
+            leftSidePoints[i] = (point + (int) (mutationRate * point * rand.nextInt(2) * 2 - 1));
+            ++i;
+        }
+        i = 0;
+        for (int point : otherLens.rightSidePoints) {                                     //how to avoid magic number?
+            rightSidePoints[i] = (point + (int) (mutationRate * point * rand.nextInt(2) * 2 - 1));
+            i++;
+        }
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
