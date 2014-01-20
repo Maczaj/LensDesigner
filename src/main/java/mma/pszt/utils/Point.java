@@ -1,4 +1,4 @@
-package mma.pszt.model;
+package mma.pszt.utils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

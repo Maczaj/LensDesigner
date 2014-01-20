@@ -36,7 +36,7 @@ public class Controller {
         System.out.println(params.getNumberOfRays());
         System.out.println(params.getRefractiveIndex());
 
-        model.setParameters(params);
+//        model.setParameters(params);
 
         while(true)
         {

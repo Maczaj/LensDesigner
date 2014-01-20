@@ -9,6 +9,7 @@ package mma.pszt.model;/**
 import lombok.Getter;
 import lombok.Setter;
 import mma.pszt.utils.Line;
+import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 
 
@@ -17,25 +18,25 @@ import org.apache.log4j.Logger;
  */
 @Getter
 @Setter
-public class LensSegment {
+class LensSegment {
     private static final Logger logger = Logger.getLogger(LensSegment.class.getName());
 
     private Point startingPoint;
     private Point endingPoint;
 
-    public LensSegment(Point first, Point second){
+    LensSegment(Point first, Point second) {
         this.startingPoint = first;
         this.endingPoint = second;
         logger.debug("Creating segment - from " + startingPoint + " to " + endingPoint);
     }
 
 
-    public Line getAsLineEquation(){
-         return new Line(this.startingPoint , this.endingPoint);
+    Line getAsLineEquation() {
+        return new Line(this.startingPoint, this.endingPoint);
     }
 
-    @Override
-    public String toString() {
-        return  startingPoint + " => " + endingPoint ;
-    }
+//    @Override
+//    public String toString() {
+//        return  startingPoint + " => " + endingPoint ;
+//    }
 }
