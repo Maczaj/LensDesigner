@@ -8,6 +8,7 @@ import org.mockito.Mockito;
 
 import static mma.pszt.model.LensMathUtils.calculateIncidenceAngle;
 import static mma.pszt.model.LensMathUtils.calculateIntersectingLines;
+import static mma.pszt.model.LensMathUtils.calculateRefractedLine;
 
 
 /**
@@ -129,5 +130,21 @@ public class LensMathUtilsTest {
         Mockito.when(l1.getC()).thenReturn(3.0);
         //expected angle -
         Assert.assertEquals( Math.PI/3  , calculateIncidenceAngle(l1 , l2)  , 0.01 );
+    }
+
+    @Test
+    public void testRefractedLineEquationCalculation1(){
+//        thinking about sth non-trivial...
+        Point p = Mockito.mock( Point.class );
+        double angle = Math.PI/4;
+
+        Mockito.when( p.getX()).thenReturn( 4.0 ) ;
+        Mockito.when( p.getY()).thenReturn( 0.0 ) ;
+
+        //expected: tan45 X - y + C
+        Line calculated = calculateRefractedLine( angle , p);
+        //a factor
+        Assert.assertEquals( Math.tan(3*Math.PI/4) , calculated.getA() , 0.01 );
+        Assert.assertEquals( -1.0 , calculated.getB() , 0.01 );
     }
 }
