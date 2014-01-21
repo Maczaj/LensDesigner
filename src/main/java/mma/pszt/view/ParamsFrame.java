@@ -33,7 +33,7 @@ public class ParamsFrame {
     JLabel l4 = new JLabel("Refractive Index:       ");
     JLabel lError = new JLabel("Wrong Param");
 
-    final Parameters param = new Parameters(0,0,0.0,0.0,0.0);
+    final Parameters param = new Parameters();
 
     public ParamsFrame()
 	    {

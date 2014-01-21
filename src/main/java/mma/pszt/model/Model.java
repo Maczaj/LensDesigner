@@ -20,6 +20,12 @@ public class Model {
     private final double c1 = 0.82;
     private final double c2 = 1.2;
 
+    public Model() {
+        sigma = 1;
+        this.parameters = new Parameters(0, 0, 0.0, 0.0, 0.0);
+        this.lens = new EvaluatedLens(new Lens(), parameters);
+    }
+
     public Model(Parameters parameters) {
         sigma = 1;
         this.parameters = parameters;

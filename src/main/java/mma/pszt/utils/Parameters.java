@@ -10,9 +10,23 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor
 public class Parameters {
 
+
     private Integer numberOfPoints;
     private Integer numberOfRays;
     private Double refractiveIndex;
     private Double focusingAccuracy;
     private Double mutationRate;
+
+    public Parameters()
+    {
+
+    }
+
+    public boolean checkIfParamsCorrect()
+    {
+        return numberOfPoints != null &&
+                numberOfRays != null &&
+                focusingAccuracy != null &&
+                refractiveIndex != null;
+    }
 }

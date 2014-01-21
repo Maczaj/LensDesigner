@@ -5,7 +5,7 @@ import lombok.Setter;
 import mma.pszt.utils.Parameters;
 import mma.pszt.utils.Point;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  * Lens with rays, evaluated score and calculated intersection points
@@ -23,6 +23,26 @@ public class EvaluatedLens {
 
     public EvaluatedLens(final Lens lens, Parameters parameters) {
         this.lens = lens;
-        for (int i = 0; i < parameters.getNumberOfRays())
+        this.rays = new HashSet<>();
+        for (int i = 0; i < parameters.getNumberOfRays(); i++) {
+            List rayPoints = new ArrayList<>();
+            rayPoints.add(new Point(-Lens.BASE_DISTANCE * 2, (i * Lens.LENS_HEIGHT) / parameters.getNumberOfRays()));
+            rayPoints.add(new Point(+Lens.BASE_DISTANCE * 2, (i * Lens.LENS_HEIGHT) / parameters.getNumberOfRays()));
+//            rayPoints.add(new Point( , ));
+//            rayPoints.add(new Point( , ));
+//            rayPoints.add(new Point( , ));
+            Ray ray = new Ray(rayPoints);
+            this.rays.add(ray);
+        }
+    }
+
+    public EvaluatedLens() {
+        this.lens = new Lens();
+        this.rays = new HashSet<Ray>();
+//        this.rays.add(new Ray());
+//        this.intersectionPoints = new HashSet<Point>();
+//        this.intersectionPoints.add(new Point(3.0,4.0));
+//        this.intersectionPoints.add(new Point(6.0,-4.0));
+//        this.intersectionPoints.add(new Point(-2.0,-4.0));
     }
 }

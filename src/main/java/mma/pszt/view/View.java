@@ -1,9 +1,9 @@
 package mma.pszt.view;
 
-import mma.pszt.model.Lens;
+import mma.pszt.model.EvaluatedLens;
 import mma.pszt.utils.Parameters;
 
-import java.util.List;
+import java.util.LinkedList;
 
 /**
  *@author Arkadiusz Szlachetka
@@ -11,37 +11,28 @@ import java.util.List;
 public class View
 {
 
-    private final LensFrame lensFrame;
+    private LensFrame lensFrame;
+    EvaluatedLens lens;
 
     public View()
     {
-        lensFrame = new LensFrame();
-        lensFrame.setVisible(false);
     }
 
+    public void createFrame(EvaluatedLens lens)
+    {
+        this.lens = lens;
+        lensFrame = new LensFrame(lens);
+        lensFrame.setVisible(true);
+
+    }
     public Parameters setParameters() {
         ParamsFrame paramsFrame = new ParamsFrame();
 
-        while(paramsFrame.getParam().getNumberOfPoints() == null ||
-                paramsFrame.getParam().getFocusingAccuracy() == null)
-        {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            catch(IllegalMonitorStateException e)
-            {
-                //do nothing
-            }
-        }
-
-        lensFrame.setVisible(true);
         return paramsFrame.getParam();
     }
 
-    public void setListLens(List<Lens> listLens) {
-        lensFrame.listLens = listLens;
+    public void setLens(EvaluatedLens lens) {
+        lensFrame.setLens(lens);
     }
 
     public void drawView() {
