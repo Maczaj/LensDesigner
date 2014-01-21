@@ -29,7 +29,7 @@ public class LensMathUtilsTest {
         Mockito.when(l2.getA()).thenReturn(0.5);
         Mockito.when(l2.getB()).thenReturn(-1.0);
         Mockito.when(l2.getC()).thenReturn(0.0);
-        Assert.assertEquals(calculateIntersectingLines(l1, l2), new Point(0, 0));
+        Assert.assertEquals(calculateIntersectingPoint(l1, l2), new Point(0, 0));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class LensMathUtilsTest {
         Mockito.when(l2.getA()).thenReturn(0.0);
         Mockito.when(l2.getB()).thenReturn(-1.0);
         Mockito.when(l2.getC()).thenReturn(0.0);
-        Assert.assertEquals(calculateIntersectingLines(l1, l2), new Point(1, 0));
+        Assert.assertEquals(calculateIntersectingPoint(l1, l2), new Point(1, 0));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class LensMathUtilsTest {
         Mockito.when(l2.getA()).thenReturn(-1.0);
         Mockito.when(l2.getB()).thenReturn(-1.0);
         Mockito.when(l2.getC()).thenReturn(2.0);
-        Point one = calculateIntersectingLines(l1, l2);
+        Point one = calculateIntersectingPoint(l1, l2);
         Point two = new Point(4.0 / 3, 2.0 / 3);
         Assert.assertTrue(pointsEqualsPlusMinus(one, two, 0.01));
     }
@@ -143,7 +143,7 @@ public class LensMathUtilsTest {
         //expected: tan45 X - y + C
         Line calculated = calculateRefractedLine( angle , p);
         //a factor
-        Assert.assertEquals( Math.tan(3*Math.PI/4) , calculated.getA() , 0.01 );
+        Assert.assertEquals(Math.tan(3 * Math.PI / 4), calculated.getA(), 0.01);
         Assert.assertEquals( -1.0 , calculated.getB() , 0.01 );
     }
 

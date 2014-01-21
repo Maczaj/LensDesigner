@@ -15,13 +15,19 @@ abstract class LensMathUtils {
         throw new IllegalAccessException("Abstract class should not be instanced.");
     }
 
-    public static Point calculateIntersectingLines(Line one, Line two) {
-        double a1 = one.getA();
-        double b1 = one.getB();
-        double c1 = one.getC();
-        double a2 = two.getA();
-        double b2 = two.getB();
-        double c2 = two.getC();
+    /**
+     * Calculates intersectiong point from two lines
+     * @param lineOne
+     * @param lineTwo
+     * @return Point if succeed or null if lines are parallel or equal
+     */
+    public static Point calculateIntersectingPoint(Line lineOne, Line lineTwo) {
+        double a1 = lineOne.getA();
+        double b1 = lineOne.getB();
+        double c1 = lineOne.getC();
+        double a2 = lineTwo.getA();
+        double b2 = lineTwo.getB();
+        double c2 = lineTwo.getC();
 
         // two lines are parallel OR equal
         if (a1 == a2 && b1 == b2 || a1 == a2 && b1 == b2 && c1 == c2) {
@@ -57,7 +63,7 @@ abstract class LensMathUtils {
             return 0.0;
         }
 
-        Line normal = new Line ( calculateIntersectingLines( l1 , l2 ) , -l2.getB() , l2.getA() );
+        Line normal = new Line ( calculateIntersectingPoint(l1, l2) , -l2.getB() , l2.getA() );
 
       return Math.abs( Math.atan(  ( l1.getA()*normal.getB() - normal.getA() * l1.getB() ) / ( l1.getA() * normal.getA() + l1.getB() * normal.getB()) ) );
     }

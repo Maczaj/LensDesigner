@@ -1,19 +1,18 @@
 package mma.pszt.model;
 
 import lombok.Getter;
-import mma.pszt.LensDesigner;
 import mma.pszt.utils.Parameters;
 import org.apache.log4j.Logger;
-import org.apache.log4j.Priority;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Model {
 
     private static final Logger logger = Logger.getLogger(Model.class.getName());
     private final Parameters parameters;
     @Getter
-    private Lens lens;
+    private EvaluatedLens lens;
     private double sigma;
     private List<Integer> lastLensChoices = new LinkedList<>();
     private int noGeneration = 1;
@@ -21,20 +20,14 @@ public class Model {
     private final double c1 = 0.82;
     private final double c2 = 1.2;
 
-    public Model() {
-        sigma = 1;
-        parameters = new Parameters(0, 0, 0.0, 0.0, 0.0);
-        lens = new Lens();
-    }
-
     public Model(Parameters parameters) {
         sigma = 1;
         this.parameters = parameters;
-        lens = new Lens();
+        this.lens = new EvaluatedLens(new Lens(), parameters);
     }
 
     public void nextIteration() {
-        Lens newLens = new Lens(lens, sigma);
+        EvaluatedLens newLens = new EvaluatedLens(new Lens(lens.getLens(), sigma), parameters);
         if (lens.getScore() <= newLens.getScore()) {
             lens = newLens;
             lastLensChoices.add(1);
