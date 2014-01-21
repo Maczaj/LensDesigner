@@ -87,5 +87,16 @@ abstract class LensMathUtils {
         return new Line(a , b ,c );
     }
 
+    /**
+     * Computes distance of specified point to specified line.
+     * @param point
+     * @param line
+     * @return distance
+     */
+    public static double computePointsDistance(Point point , Line line){
+        return Math.abs( line.getA() * point.getX() + line.getB() * point.getY() + line.getC()) /
+                Math.sqrt( Math.pow(line.getA() , 2) + Math.pow( line.getB() , 2 ));
+    }
+
 
 }

@@ -7,9 +7,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static mma.pszt.model.LensMathUtils.calculateIncidenceAngle;
-import static mma.pszt.model.LensMathUtils.calculateIntersectingLines;
-import static mma.pszt.model.LensMathUtils.calculateRefractedLine;
+import static mma.pszt.model.LensMathUtils.*;
 
 
 /**
@@ -147,5 +145,21 @@ public class LensMathUtilsTest {
         //a factor
         Assert.assertEquals( Math.tan(3*Math.PI/4) , calculated.getA() , 0.01 );
         Assert.assertEquals( -1.0 , calculated.getB() , 0.01 );
+    }
+
+    @Test
+    public void testComputingDistanceOfPointFromLine(){
+        Point p = Mockito.mock( Point.class );
+        Line l = Mockito.mock ( Line.class );
+
+        Mockito.when( p.getX()).thenReturn(2.0);
+        Mockito.when( p.getY()).thenReturn(3.0);
+
+        Mockito.when( l.getA()).thenReturn(1.0);
+        Mockito.when( l.getB()).thenReturn(-1.0);
+        Mockito.when( l.getC()).thenReturn(3.0);
+
+        //expected: sqrt(2)
+        Assert.assertEquals(Math.sqrt(2), computePointsDistance(p, l), 0.01);
     }
 }
