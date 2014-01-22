@@ -1,13 +1,11 @@
 package mma.pszt.view;
 
 import mma.pszt.model.EvaluatedLens;
-
+import mma.pszt.model.Ray;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import java.awt.Graphics;
-import java.awt.Color;
-import java.util.LinkedList;
+import java.awt.*;
 
 
 public class LensPanel extends JPanel {
@@ -32,9 +30,19 @@ public class LensPanel extends JPanel {
         this.setBackground(Color.BLACK);
 
         g.setColor(Color.GRAY);
-        logger.debug(lens == null);
-        System.out.println("to jest do namalowania: " + lens.getIntersectionPoints().size());
-        g.drawLine( 0, 0, 100, 100);
+        System.out.println("to jest do namalowania");
+        for (Ray r : lens.getRays()) {
+            for (int i = 0; i < r.getMidPoints().size() - 1; ++i) {
+                logger.debug("draw ray " + i);
+                g.drawLine(
+                        (int)r.getMidPoints().get(i).getX(),
+                        (int)r.getMidPoints().get(i).getY(),
+                        (int)r.getMidPoints().get(i+1).getX(),
+                        (int)r.getMidPoints().get(i+1).getY()
+                );
+            }
+        }
+//        g.drawLine( 0, 0, 100, 100);
 
 
     }

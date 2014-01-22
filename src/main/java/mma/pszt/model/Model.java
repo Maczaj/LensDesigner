@@ -1,6 +1,7 @@
 package mma.pszt.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import mma.pszt.utils.Parameters;
 import org.apache.log4j.Logger;
 
@@ -10,7 +11,9 @@ import java.util.List;
 public class Model {
 
     private static final Logger logger = Logger.getLogger(Model.class.getName());
-    private final Parameters parameters;
+    @Getter
+    @Setter
+    private Parameters parameters;
     @Getter
     private EvaluatedLens lens;
     private double sigma;
@@ -20,11 +23,11 @@ public class Model {
     private final double c1 = 0.82;
     private final double c2 = 1.2;
 
-    public Model() {
-        sigma = 1;
-        this.parameters = new Parameters(0, 0, 0.0, 0.0, 0.0);
-        this.lens = new EvaluatedLens(new Lens(), parameters);
-    }
+//    public Model() {
+//        sigma = 1;
+//        this.parameters = new Parameters(0, 0, 0.0, 0.0, 0.0);
+//        this.lens = new EvaluatedLens(new Lens(), parameters);
+//    }
 
     public Model(Parameters parameters) {
         sigma = 1;

@@ -29,4 +29,9 @@ public class Parameters {
                 focusingAccuracy != null &&
                 refractiveIndex != null;
     }
+
+    @Override
+    public String toString() {
+        return "numberOfPoints : " + numberOfPoints + " numberOfRays: " + numberOfRays;
+    }
 }
