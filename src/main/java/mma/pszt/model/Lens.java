@@ -35,7 +35,7 @@ public class Lens {
         noGeneration = 0;
 
         for (int i = 0; i < POINTS_QUANTITY; ++i) {
-            this.leftSidePoints[i] = BASE_DISTANCE;
+            this.leftSidePoints[i] = - BASE_DISTANCE;
             this.rightSidePoints[i] = BASE_DISTANCE;
         }
     }

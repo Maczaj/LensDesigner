@@ -17,7 +17,7 @@ public class Controller {
 
     public Controller() {
         this.view = new View();
-        this.model = new Model(new Parameters(10, 5, 1.4, 3.0, 1.1));
+        this.model = new Model(new Parameters(10, 7, 1.4, 3.0, 1.1));
     }
 
     public void start() {
@@ -54,8 +54,8 @@ public class Controller {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            model.nextIteration();
             lens = model.getLens();
-
             view.setLens(lens);
             view.drawView();
         }

@@ -30,7 +30,7 @@ public class Model {
 //    }
 
     public Model(Parameters parameters) {
-        sigma = 1;
+        sigma = 2;
         this.parameters = parameters;
         this.lens = new EvaluatedLens(new Lens(), parameters);
     }
@@ -52,9 +52,9 @@ public class Model {
         }
         if (noGeneration % stepsToChangeSigma == 0) {
             double ro = (count * 1.0) / stepsToChangeSigma;
-            if (ro < 1.0/5) {
+            if (ro < 0.2) {
                 sigma = c1 * sigma;
-            } else if (ro > 1.0/5) {
+            } else if (ro > 0.2) {
                 sigma = c2 * sigma;
             }
             lastLensChoices.clear();
