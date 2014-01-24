@@ -75,8 +75,11 @@ abstract class LensMathUtils {
      * @param nDestinationEnv refractive index of destination environment.
      * @return computed value of angle
      */
-    public static double calculateRefractionAngle( double incidenceAngle , double nSourceEnv , double nDestinationEnv  ){
-        return Math.asin( ( nDestinationEnv * Math.sin ( incidenceAngle ) ) / nSourceEnv );
+    public static double calculateRefractionAngle( double incidenceAngle , double nSourceEnv , double nDestinationEnv ) {
+        logger.debug("Call for: " + incidenceAngle + " " + nSourceEnv + " " + nDestinationEnv);
+        double refractionAngle = Math.asin( ( nSourceEnv * Math.sin ( incidenceAngle ) ) / nDestinationEnv );
+
+        return refractionAngle;
     }
 
     /**
@@ -104,5 +107,49 @@ abstract class LensMathUtils {
                 Math.sqrt( Math.pow(line.getA() , 2) + Math.pow( line.getB() , 2 ));
     }
 
+    /**
+     * * Get the equation of refracted line based on two lines and refractive indexes of both environments.
+     * @param l1 line which is inciding
+     * @param l2 line which is considered to be an edge
+     * @param nEnvSource refractive index of source environment
+     * @param nEnvDest refractive index of destination environment
+     * @return refracted line
+     * @throws IllegalArgumentException when total internal incidence occures.
+     */
+    public static Line getRefractedLine(Line l1, Line l2, double nEnvSource, double nEnvDest) throws IllegalArgumentException{
+        logger.debug("Calculatin refracted line for entry:" + l1.toString() + " " + l2.toString() + " sourceEnv:" + nEnvSource + " destEnv:" + nEnvDest);
 
+        double incidenceAngle = calculateIncidenceAngle(l1 , l2);
+
+        logger.debug("Calculated incidence angle:" + incidenceAngle);
+        if( incidenceAngle  < 0.01  ){
+            return l1;
+        }
+
+        double refrationAngle = calculateRefractionAngle(incidenceAngle , nEnvSource , nEnvDest );
+
+        if( refrationAngle == Double.NaN){
+            throw new IllegalArgumentException("Total internal incidence occured!");
+        }
+
+        logger.debug("Calculated refraction angle:" + refrationAngle);
+        Point refractionPoint = calculateIntersectingPoint(l1, l2 );
+
+
+        double aFactor = 0.0;
+
+
+        if(l2.getB() == 1.0){
+            l2.scaleFactors(-1.0);
+        }
+        aFactor = Math.atan( l2.getB() );
+
+        double a = - Math.tan( refrationAngle + aFactor );
+        double b = -1.0;
+        double c = a * refractionPoint.getY() - b * refractionPoint.getY();
+
+        logger.debug("Calculated refraction point:" + refractionPoint.toString());
+        return new Line(a , b ,c );
+//        return calculateRefractedLine(refrationAngle , refractionPoint);
+    }
 }

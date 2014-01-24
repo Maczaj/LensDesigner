@@ -1,6 +1,7 @@
 package mma.pszt.model;
 
 import mma.pszt.utils.Line;
+import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import mma.pszt.utils.Point;
 import org.junit.Assert;
@@ -15,9 +16,12 @@ import static mma.pszt.model.LensMathUtils.*;
  */
 public class LensMathUtilsTest {
 
+    private static final Logger logger = Logger.getLogger(LensMathUtils.class.getName());
+
     static{
         PropertyConfigurator.configure("log4j.properties");
     }
+
 
     @Test
     public void testTrivial() {
@@ -161,5 +165,14 @@ public class LensMathUtilsTest {
 
         //expected: sqrt(2)
         Assert.assertEquals(Math.sqrt(2), computePointsDistance(p, l), 0.01);
+    }
+
+    @Test
+    public void refractionTest(){
+        Line l1 = new Line(new Point(0.0,0.0),new Point(1.0,0.0));
+        Line l2 = new Line(new Point( 1.0, 1.0) , new Point( 2.0, 0.0 ));
+
+        Line l3 = getRefractedLine(l1,l2, 1.0 , 1.33);
+        logger.debug("Received line:" + l3.toString());
     }
 }
