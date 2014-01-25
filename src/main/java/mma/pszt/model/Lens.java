@@ -16,9 +16,9 @@ import java.util.Random;
 @EqualsAndHashCode
 public class Lens {
     private static final Logger logger = Logger.getLogger(Lens.class.getName());
-    static final int BASE_DISTANCE = 15;
+    static final int BASE_DISTANCE = 30;
     static final int POINTS_QUANTITY = 10;
-    static final int LENS_HEIGHT = 100;
+    static final int LENS_HEIGHT = 200;
     @Getter
     private final int[] leftSidePoints;
     @Getter

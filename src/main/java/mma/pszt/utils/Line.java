@@ -70,6 +70,15 @@ public class Line {
     }
 
     /**
+     * Get value of function from x value.
+     * @param x parameter of function
+     * @return y value of function
+     */
+    public double get(double x) {
+        return (a * x + c) / -b;
+    }
+
+    /**
      * Creates new line with scaled factors.
      * @param p level of scaling
      * @return

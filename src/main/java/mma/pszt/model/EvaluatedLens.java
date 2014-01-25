@@ -37,18 +37,42 @@ public class EvaluatedLens {
             Point firstPoint = new Point( - Lens.BASE_DISTANCE * 2, (i * Lens.LENS_HEIGHT) / parameters.getNumberOfRays());
             Point lineFromFirstPoint = new Point(firstPoint.getX() + 1, firstPoint.getY());
             rayPoints.add(firstPoint);
-            // zapisz punkt przecięcia pierwszego promienia (prostej) z którymś segmentem soczewki
-//            for (int j = 0; j < Lens.POINTS_QUANTITY - 1; j++) {
-//                LensMathUtils.getRefractedLine(
-//                        new Line(firstPoint, lineFromFirstPoint),
-//                        new Line(lens.getLeftSidePoints())
-//                );
-//            }
+            Line rayLine =  new Line(firstPoint, lineFromFirstPoint);
+            // znajdź segment soczewki z którym promień się krzyżuje
+            for (int j = 0; j < Lens.POINTS_QUANTITY - 1; j++) {
+                Point lensPoint1 = leftSidePoints.get(j);
+                Point lensPoint2 = leftSidePoints.get(j+1);
+                Line lensLine = new Line(lensPoint1, lensPoint2);
+                Point intersectionPoint = LensMathUtils.calculateIntersectingPoint(rayLine, lensLine);
+                if (
+                        (lensPoint1.getX() < intersectionPoint.getX() && intersectionPoint.getX() < lensPoint2.getX()
+                        || lensPoint2.getX() < intersectionPoint.getX() && intersectionPoint.getX() < lensPoint1.getX())
+                        &&
+                        (lensPoint1.getY() < intersectionPoint.getY() && intersectionPoint.getY() < lensPoint2.getY()
+                        || lensPoint2.getY() < intersectionPoint.getY() && intersectionPoint.getY() < lensPoint1.getY())
+                ) {
+                    // zapisz punkt przecięcia promienia (prostej) z którymś z lewych segmentów soczewki;
+                    rayPoints.add(intersectionPoint);
+                    break;
+                }
+            }
+            Line lensLine = new Line(leftSidePoints.get(0), leftSidePoints.get(1));
+            Line newLine = LensMathUtils.getRefractedLine(
+                    rayLine,
+                    lensLine,
+                    1.0,
+                    parameters.getRefractiveIndex()
+            );
+            rayPoints.add(
+                    new Point(
+                            LensMathUtils.calculateIntersectingPoint(rayLine, lensLine).getX()+10,
+                            newLine.get(LensMathUtils.calculateIntersectingPoint(rayLine, lensLine).getX() + 10)
+                    )
+            );
+
             // znajdź nowe równanie promienia (prostej) po załamaniu przez soczewkę
             // powtórz dwa poprzednie punkty dla drugiej części soczewki
             // zapisz ostatni punkt - koniec promienia
-            rayPoints.add(new Point(Lens.BASE_DISTANCE * 2, (i * Lens.LENS_HEIGHT) / parameters.getNumberOfRays()));
-
 
             Ray ray = new Ray(rayPoints);
             this.rays.add(ray);

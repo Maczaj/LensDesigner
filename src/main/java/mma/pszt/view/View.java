@@ -12,7 +12,7 @@ public class View
 {
     static int OFFSET_X = 200;
     static int OFFSET_Y = 20;
-    static int SCALE = 4;
+    static int SCALE = 2;
     private LensFrame lensFrame;
     EvaluatedLens lens;
 
