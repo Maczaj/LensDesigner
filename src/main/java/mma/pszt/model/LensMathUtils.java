@@ -77,8 +77,8 @@ abstract class LensMathUtils {
      */
     public static double calculateRefractionAngle( double incidenceAngle , double nSourceEnv , double nDestinationEnv ) {
         logger.debug("Call for: " + incidenceAngle + " " + nSourceEnv + " " + nDestinationEnv);
-        double refractionAngle = Math.asin( ( nSourceEnv * Math.sin ( incidenceAngle ) ) / nDestinationEnv );
-
+//        double refractionAngle = Math.asin( ( nSourceEnv * Math.sin ( incidenceAngle ) ) / nDestinationEnv );
+        double refractionAngle = Math.asin( ( nDestinationEnv * Math.sin ( incidenceAngle ) ) / nSourceEnv );
         return refractionAngle;
     }
 
@@ -128,28 +128,27 @@ abstract class LensMathUtils {
 
         double refrationAngle = calculateRefractionAngle(incidenceAngle , nEnvSource , nEnvDest );
 
-        if( refrationAngle == Double.NaN){
+        if( refrationAngle == Double.NaN || Double.isNaN(refrationAngle)){
+            logger.error("Expcetion damn...");
             throw new IllegalArgumentException("Total internal incidence occured!");
         }
 
         logger.debug("Calculated refraction angle:" + refrationAngle);
         Point refractionPoint = calculateIntersectingPoint(l1, l2 );
+        logger.debug("Calculated intersection point:" + refractionPoint.toString());
 
-
-        double aFactor = 0.0;
-
-
-        if(l2.getB() == 1.0){
-            l2.scaleFactors(-1.0);
+        if(l1.getB()!=0){
+            l1.scaleFactors( -1.0 / l1.getB());
         }
-        aFactor = Math.atan( l2.getB() );
 
-        double a = - Math.tan( refrationAngle + aFactor );
+        double gamma = Math.atan( l1.getA() );
+
+        double sigma = gamma - (incidenceAngle - refrationAngle);
+    logger.debug("Angles: alfa=" + incidenceAngle + ", beta=" + refrationAngle + ", gamma=" + gamma + ", sigma=" + sigma );
+        double a = Math.tan( sigma );
         double b = -1.0;
         double c = a * refractionPoint.getY() - b * refractionPoint.getY();
 
-        logger.debug("Calculated refraction point:" + refractionPoint.toString());
         return new Line(a , b ,c );
-//        return calculateRefractedLine(refrationAngle , refractionPoint);
     }
 }

@@ -169,10 +169,11 @@ public class LensMathUtilsTest {
 
     @Test
     public void refractionTest(){
-        Line l1 = new Line(new Point(0.0,0.0),new Point(1.0,0.0));
-        Line l2 = new Line(new Point( 1.0, 1.0) , new Point( 2.0, 0.0 ));
-
-        Line l3 = getRefractedLine(l1,l2, 1.0 , 1.33);
+//        Line l1 = new Line(new Point(0.0,0.0),new Point(1.0,0.0));
+        Line l1 = new Line( 3 , -1 , 3);
+//        Line l2 = new Line(new Point( 1.0, 1.0) , new Point( 2.0, 0.0 ));
+        Line l2 = new Line( 2,-2,0);
+        Line l3 = getRefractedLine(l1,l2, 1.0 , 1.2);
         logger.debug("Received line:" + l3.toString());
     }
 }
