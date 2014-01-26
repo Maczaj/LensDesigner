@@ -30,6 +30,7 @@ public class EvaluatedLens {
         System.out.println(parameters);
         this.lens = lens;
         this.rays = new HashSet<>();
+        score = 0;
         leftSidePoints = evaluateLensPoints(lens.getLeftSidePoints());
         rightSidePoints = evaluateLensPoints(lens.getRightSidePoints());
         for (int i = 0; i < parameters.getNumberOfRays(); i++) {
@@ -114,7 +115,7 @@ public class EvaluatedLens {
 
             Ray ray = new Ray(rayPoints);
             this.rays.add(ray);
-
+            score += LensMathUtils.computePointsDistance(new Point(-100, Lens.LENS_HEIGHT/2), endRay);
             logger.debug("breakpoint");
         }
     }
