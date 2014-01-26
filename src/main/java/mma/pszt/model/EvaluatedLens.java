@@ -55,7 +55,7 @@ public class EvaluatedLens {
                 }
             }
             if (lensLine == null || intersectionPoint == null) {
-                break;
+                continue;
             }
             // znajdź nowe równanie promienia (prostej) po załamaniu przez soczewkę
             Line midRay = null;
@@ -68,7 +68,9 @@ public class EvaluatedLens {
                 );
             } catch (IllegalArgumentException e) {
                 logger.error("MADAFAKA", e);
-                System.exit(-1);
+                Ray ray = new Ray(rayPoints);
+                this.rays.add(ray);
+                continue;
             }
             Line rightLensLine = null;
             Point rightIntersectionPoint = null;
@@ -85,7 +87,7 @@ public class EvaluatedLens {
                 }
             }
             if (rightLensLine == null || rightIntersectionPoint == null) {
-                break;
+                continue;
             }
             Line endRay = null;
             try {
@@ -97,7 +99,9 @@ public class EvaluatedLens {
                 );
             } catch (IllegalArgumentException e) {
                 logger.error("MADAFAKA", e);
-                System.exit(-1);
+                Ray ray = new Ray(rayPoints);
+                this.rays.add(ray);
+                continue;
             }
 
             // zapisz ostatni punkt - koniec promienia
@@ -116,11 +120,11 @@ public class EvaluatedLens {
     }
 
     private boolean isTheFirstInTheMiddleOfRemaings(Point intersectionPoint, Point lensPoint1, Point lensPoint2) {
-        return (lensPoint1.getX() < intersectionPoint.getX() && intersectionPoint.getX() <= lensPoint2.getX()
-                || lensPoint2.getX() < intersectionPoint.getX() && intersectionPoint.getX() <= lensPoint1.getX())
+        return (lensPoint1.getX() <= intersectionPoint.getX() && intersectionPoint.getX() <= lensPoint2.getX()
+                || lensPoint2.getX() <= intersectionPoint.getX() && intersectionPoint.getX() <= lensPoint1.getX())
                 &&
-                (lensPoint1.getY() < intersectionPoint.getY() && intersectionPoint.getY() <= lensPoint2.getY()
-                || lensPoint2.getY() < intersectionPoint.getY() && intersectionPoint.getY() <= lensPoint1.getY());
+                (lensPoint1.getY() <= intersectionPoint.getY() && intersectionPoint.getY() <= lensPoint2.getY()
+                || lensPoint2.getY() <= intersectionPoint.getY() && intersectionPoint.getY() <= lensPoint1.getY());
     }
 
     public EvaluatedLens(Parameters parameters) {

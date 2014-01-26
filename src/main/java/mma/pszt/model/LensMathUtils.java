@@ -131,8 +131,8 @@ abstract class LensMathUtils {
 
         if( refrationAngle == Double.NaN || Double.isNaN(refrationAngle)){
             logger.error("Expcetion damn...");
-            System.exit(-2);
-            //throw new IllegalArgumentException("Total internal incidence occured!");
+//            System.exit(-2);
+            throw new IllegalArgumentException("Total internal incidence occured!");
         }
 
         logger.debug("Calculated refraction angle:" + refrationAngle);
@@ -150,7 +150,7 @@ abstract class LensMathUtils {
     logger.debug("Angles: alfa=" + incidenceAngle + ", beta=" + refrationAngle + ", gamma=" + gamma + ", sigma=" + sigma );
         double a = Math.tan( sigma );
         double b = -1.0;
-        double c = a * refractionPoint.getY() - b * refractionPoint.getY();
+        double c = - a * refractionPoint.getX() - b * refractionPoint.getY();
     logger.debug("a=" + a + ", b=" + b + ", c=" + c);
         return new Line(a , b ,c );
     }

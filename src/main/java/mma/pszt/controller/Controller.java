@@ -17,7 +17,7 @@ public class Controller {
 
     public Controller() {
         this.view = new View();
-        this.model = new Model(new Parameters(10, 9, 2.0, 3.0, 1.1));
+        this.model = new Model(new Parameters(10, 9, 3.0, 3.0, 1.1));
     }
 
     public void start() {
