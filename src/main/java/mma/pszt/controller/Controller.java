@@ -17,7 +17,7 @@ public class Controller {
 
     public Controller() {
         this.view = new View();
-        this.model = new Model(new Parameters(10, 9, 3.0, 3.0, 1.1));
+        this.model = new Model(new Parameters(100, 50, 3.0, 3.0, 0.2));
     }
 
     public void start() {
@@ -44,17 +44,35 @@ public class Controller {
         while (true) {
             try {
                 while (model.getLens() == null)
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
             try {
-                Thread.sleep(1000);
+                Thread.sleep(10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            model.nextIteration();
+
+            int generationResult = model.nextIteration();
+
+            if( generationResult < 0 ){
+                logger.info("Simulation finished without result!");
+                System.exit(0);
+            }
+            else if( generationResult > 0 ){
+                logger.info("Simulation finished with result in generation no. " + generationResult + " with score " + model.getLens().getScore());
+                try{
+                    Thread.sleep(20000);
+                }
+                catch(Exception e){
+                    //be silent like a ninja...
+                }
+
+                System.exit(0);
+            }
+
             lens = model.getLens();
             view.setLens(lens);
             view.drawView();

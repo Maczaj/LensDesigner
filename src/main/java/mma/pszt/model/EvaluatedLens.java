@@ -68,9 +68,10 @@ public class EvaluatedLens {
                         parameters.getRefractiveIndex()
                 );
             } catch (IllegalArgumentException e) {
-                logger.error("MADAFAKA", e);
+                logger.error("Refraction probably not possible");
                 Ray ray = new Ray(rayPoints);
                 this.rays.add(ray);
+                score = 200000;
                 continue;
             }
             Line rightLensLine = null;
@@ -99,23 +100,24 @@ public class EvaluatedLens {
                         1.0
                 );
             } catch (IllegalArgumentException e) {
-                logger.error("MADAFAKA", e);
+                logger.error("Refraction probably not possible");
                 Ray ray = new Ray(rayPoints);
                 this.rays.add(ray);
+                score = 200000;
                 continue;
             }
 
             // zapisz ostatni punkt - koniec promienia
             rayPoints.add(
                     new Point(
-                            rightIntersectionPoint.getX() + 100,
-                            endRay.get(intersectionPoint.getX() + 100)
+                            rightIntersectionPoint.getX() + 200,
+                            endRay.get(intersectionPoint.getX() + 200)
                     )
             );
 
             Ray ray = new Ray(rayPoints);
             this.rays.add(ray);
-            score += LensMathUtils.computePointsDistance(new Point(-100, Lens.LENS_HEIGHT/2), endRay);
+            score += Math.pow( LensMathUtils.computePointsDistance(new Point(100, Lens.LENS_HEIGHT/2), endRay) , 2 );
             logger.debug("breakpoint");
         }
     }

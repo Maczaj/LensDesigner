@@ -17,14 +17,14 @@ import java.util.Random;
 public class Lens {
     private static final Logger logger = Logger.getLogger(Lens.class.getName());
     static final int BASE_DISTANCE = 30;
-    static final int POINTS_QUANTITY = 10;
+    static final int POINTS_QUANTITY = 100;
     static final int LENS_HEIGHT = 200;
     @Getter
     private final int[] leftSidePoints;
     @Getter
     private final int[] rightSidePoints;
     @Getter
-    private int noGeneration;
+    private static int noGeneration;
 
     /**
      * Default constructor - creates flat lens.
@@ -51,41 +51,21 @@ public class Lens {
         this.rightSidePoints = new int[POINTS_QUANTITY];
         this.leftSidePoints = new int[POINTS_QUANTITY];
 
-        this.noGeneration = previousLens.getNoGeneration() + 1;
+        noGeneration++;
 
         //now mutate each point separately
-//        int i = 0;
-//        Random rand = new Random();
-//        for (int point : previousLens.leftSidePoints) {
-//            leftSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
-//            ++i;
-//        }
-//        i = 0;
-//        for (int point : previousLens.rightSidePoints) {
-//            rightSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
-//            i++;
-//        }
-        leftSidePoints[0] = -3;
-        leftSidePoints[1] = -7;
-        leftSidePoints[2] = -11;
-        leftSidePoints[3] = -14;
-        leftSidePoints[4] = -15;
-        leftSidePoints[5] = -15;
-        leftSidePoints[6] = -14;
-        leftSidePoints[7] = -11;
-        leftSidePoints[8] = -7;
-        leftSidePoints[9] = -3;
+        int i = 0;
+        Random rand = new Random();
+        for (int point : previousLens.leftSidePoints) {
+            leftSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
+            ++i;
+        }
+        i = 0;
+        for (int point : previousLens.rightSidePoints) {
+            rightSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
+            i++;
+        }
 
-        rightSidePoints[0] = 3;
-        rightSidePoints[1] = 7;
-        rightSidePoints[2] = 11;
-        rightSidePoints[3] = 14;
-        rightSidePoints[4] = 15;
-        rightSidePoints[5] = 15;
-        rightSidePoints[6] = 14;
-        rightSidePoints[7] = 11;
-        rightSidePoints[8] = 7;
-        rightSidePoints[9] = 3;
     }
 
     @Override

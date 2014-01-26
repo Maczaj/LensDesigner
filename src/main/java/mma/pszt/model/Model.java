@@ -18,7 +18,7 @@ public class Model {
     private EvaluatedLens lens;
     private double sigma;
     private List<Integer> lastLensChoices = new LinkedList<>();
-    private int noGeneration = 1;
+//    private int noGeneration = 1;
     private final int stepsToChangeSigma = 10; // m ze skryptu
     private final double c1 = 0.82;
     private final double c2 = 1.2;
@@ -35,14 +35,23 @@ public class Model {
         this.lens = new EvaluatedLens(new Lens(), parameters);
     }
 
-    public void nextIteration() {
+    public int nextIteration() {
         EvaluatedLens newLens = new EvaluatedLens(new Lens(lens.getLens(), sigma), parameters);
-        if (lens.getScore() <= newLens.getScore()) {
+        int score = lens.getScore();
+        if ( score >= newLens.getScore()) {
+            score = newLens.getScore();
             lens = newLens;
             lastLensChoices.add(1);
         } else {
             lastLensChoices.add(0);
         }
+
+        int noGeneration = lens.getLens().getNoGeneration();
+        //test if lens is good enough
+        if(score <= parameters.getFocusingAccuracy()){
+            return noGeneration;
+        }
+
         assert (lastLensChoices.size() <= 10);
         int count = 0;
         for (Integer it : lastLensChoices) {
@@ -59,8 +68,15 @@ public class Model {
             }
             lastLensChoices.clear();
         }
-        noGeneration++;
-        System.out.println(noGeneration + " " + sigma);
+
+        //TODO zmienic nazwe tej funkcji i parametru tez!!! Np na minSigma or sth like that
+        if( sigma < parameters.getMutationRate() ){
+            return -1;
+        }
+
+//        noGeneration++;
+        logger.info("Generation no. " +noGeneration + ", current sigma: " + sigma + " target function value: " + score);
+        return 0;
     }
 }
 
