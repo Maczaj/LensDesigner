@@ -54,17 +54,38 @@ public class Lens {
         this.noGeneration = previousLens.getNoGeneration() + 1;
 
         //now mutate each point separately
-        int i = 0;
-        Random rand = new Random();
-        for (int point : previousLens.leftSidePoints) {
-            leftSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
-            ++i;
-        }
-        i = 0;
-        for (int point : previousLens.rightSidePoints) {
-            rightSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
-            i++;
-        }
+//        int i = 0;
+//        Random rand = new Random();
+//        for (int point : previousLens.leftSidePoints) {
+//            leftSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
+//            ++i;
+//        }
+//        i = 0;
+//        for (int point : previousLens.rightSidePoints) {
+//            rightSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
+//            i++;
+//        }
+        leftSidePoints[0] = -3;
+        leftSidePoints[1] = -7;
+        leftSidePoints[2] = -11;
+        leftSidePoints[3] = -14;
+        leftSidePoints[4] = -15;
+        leftSidePoints[5] = -15;
+        leftSidePoints[6] = -14;
+        leftSidePoints[7] = -11;
+        leftSidePoints[8] = -7;
+        leftSidePoints[9] = -3;
+
+        rightSidePoints[0] = 3;
+        rightSidePoints[1] = 7;
+        rightSidePoints[2] = 11;
+        rightSidePoints[3] = 14;
+        rightSidePoints[4] = 15;
+        rightSidePoints[5] = 15;
+        rightSidePoints[6] = 14;
+        rightSidePoints[7] = 11;
+        rightSidePoints[8] = 7;
+        rightSidePoints[9] = 3;
     }
 
     @Override

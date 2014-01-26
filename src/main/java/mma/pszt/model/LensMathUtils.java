@@ -64,8 +64,9 @@ abstract class LensMathUtils {
         }
 
         Line normal = new Line ( calculateIntersectingPoint(l1, l2) , -l2.getB() , l2.getA() );
-
-      return Math.abs( Math.atan(  ( l1.getA()*normal.getB() - normal.getA() * l1.getB() ) / ( l1.getA() * normal.getA() + l1.getB() * normal.getB()) ) );
+        double result = ( Math.atan(  ( l1.getA()*normal.getB() - normal.getA() * l1.getB() ) / ( l1.getA() * normal.getA() + l1.getB() * normal.getB()) ) );
+        logger.debug("calculateIncidenceAngle = " + result);
+      return result;
     }
 
     /**
@@ -116,13 +117,13 @@ abstract class LensMathUtils {
      * @return refracted line
      * @throws IllegalArgumentException when total internal incidence occures.
      */
-    public static Line getRefractedLine(Line l1, Line l2, double nEnvSource, double nEnvDest) throws IllegalArgumentException{
+    public static Line getRefractedLine(Line l1, Line l2, double nEnvSource, double nEnvDest) throws IllegalArgumentException {
         logger.debug("Calculatin refracted line for entry:" + l1.toString() + " " + l2.toString() + " sourceEnv:" + nEnvSource + " destEnv:" + nEnvDest);
 
         double incidenceAngle = calculateIncidenceAngle(l1 , l2);
 
         logger.debug("Calculated incidence angle:" + incidenceAngle);
-        if( incidenceAngle  < 0.01  ){
+        if( Math.abs(incidenceAngle) < 0.01){
             return l1;
         }
 
@@ -130,7 +131,8 @@ abstract class LensMathUtils {
 
         if( refrationAngle == Double.NaN || Double.isNaN(refrationAngle)){
             logger.error("Expcetion damn...");
-            throw new IllegalArgumentException("Total internal incidence occured!");
+            System.exit(-2);
+            //throw new IllegalArgumentException("Total internal incidence occured!");
         }
 
         logger.debug("Calculated refraction angle:" + refrationAngle);
@@ -144,11 +146,12 @@ abstract class LensMathUtils {
         double gamma = Math.atan( l1.getA() );
 
         double sigma = gamma - (incidenceAngle - refrationAngle);
+
     logger.debug("Angles: alfa=" + incidenceAngle + ", beta=" + refrationAngle + ", gamma=" + gamma + ", sigma=" + sigma );
         double a = Math.tan( sigma );
         double b = -1.0;
         double c = a * refractionPoint.getY() - b * refractionPoint.getY();
-
+    logger.debug("a=" + a + ", b=" + b + ", c=" + c);
         return new Line(a , b ,c );
     }
 }
