@@ -19,7 +19,6 @@ public class Model {
     private EvaluatedLens lens;
     private double sigma;
     private List<Integer> lastLensChoices = new LinkedList<>();
-    //    private int noGeneration = 1;
     private final int stepsToChangeSigma = 10; // m ze skryptu
     private final double c1 = 0.82;
     private final double c2 = 1.2;
@@ -66,7 +65,6 @@ public class Model {
             return -1;
         }
 
-//        noGeneration++;
         logger.info("Generation no. " + noGeneration + ", current sigma: " + sigma + " target function value: " + score);
         return 0;
     }

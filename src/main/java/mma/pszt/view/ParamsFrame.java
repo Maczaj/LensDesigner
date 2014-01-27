@@ -45,7 +45,7 @@ public class ParamsFrame {
         //number of rays
         textFieldTwo.setText("8");
         //refractive index
-        textFieldThree.setText("3");
+        textFieldThree.setText("1.4");
         //focusing accuracy
         textFieldFour.setText("3");
         //minimum sigma

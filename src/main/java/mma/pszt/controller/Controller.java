@@ -53,6 +53,10 @@ public class Controller {
 
             int generationResult = model.nextIteration();
 
+            lens = model.getLens();
+            view.setLens(lens);
+            view.drawView();
+
             if (generationResult < 0) {
                 logger.info("Simulation finished without result!");
                 System.exit(0);
@@ -66,10 +70,6 @@ public class Controller {
 
                 System.exit(0);
             }
-
-            lens = model.getLens();
-            view.setLens(lens);
-            view.drawView();
         }
     }
 }

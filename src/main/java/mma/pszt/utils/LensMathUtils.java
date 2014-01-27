@@ -135,7 +135,6 @@ public abstract class LensMathUtils {
 
         if (refrationAngle == Double.NaN || Double.isNaN(refrationAngle)) {
             logger.error("Expcetion damn...");
-//            System.exit(-2);
             throw new IllegalArgumentException("Total internal incidence occured!");
         }
 
