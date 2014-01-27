@@ -15,30 +15,22 @@ public class Model {
     @Setter
     private Parameters parameters;
     @Getter
+    @Setter
     private EvaluatedLens lens;
     private double sigma;
     private List<Integer> lastLensChoices = new LinkedList<>();
-//    private int noGeneration = 1;
     private final int stepsToChangeSigma = 10; // m ze skryptu
     private final double c1 = 0.82;
     private final double c2 = 1.2;
 
-//    public Model() {
-//        sigma = 1;
-//        this.parameters = new Parameters(0, 0, 0.0, 0.0, 0.0);
-//        this.lens = new EvaluatedLens(new Lens(), parameters);
-//    }
-
-    public Model(Parameters parameters) {
+    public Model() {
         sigma = 2;
-        this.parameters = parameters;
-        this.lens = new EvaluatedLens(new Lens(), parameters);
     }
 
     public int nextIteration() {
         EvaluatedLens newLens = new EvaluatedLens(new Lens(lens.getLens(), sigma), parameters);
         int score = lens.getScore();
-        if ( score >= newLens.getScore()) {
+        if (score >= newLens.getScore()) {
             score = newLens.getScore();
             lens = newLens;
             lastLensChoices.add(1);
@@ -48,7 +40,7 @@ public class Model {
 
         int noGeneration = lens.getLens().getNoGeneration();
         //test if lens is good enough
-        if(score <= parameters.getFocusingAccuracy()){
+        if (score <= parameters.getFocusingAccuracy()) {
             return noGeneration;
         }
 
@@ -69,13 +61,11 @@ public class Model {
             lastLensChoices.clear();
         }
 
-        //TODO zmienic nazwe tej funkcji i parametru tez!!! Np na minSigma or sth like that
-        if( sigma < parameters.getMutationRate() ){
+        if (sigma < parameters.getMinimumSigma()) {
             return -1;
         }
 
-//        noGeneration++;
-        logger.info("Generation no. " +noGeneration + ", current sigma: " + sigma + " target function value: " + score);
+        logger.info("Generation no. " + noGeneration + ", current sigma: " + sigma + " target function value: " + score);
         return 0;
     }
 }

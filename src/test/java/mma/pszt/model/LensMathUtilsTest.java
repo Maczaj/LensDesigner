@@ -1,24 +1,26 @@
 package mma.pszt.model;
 
+import mma.pszt.utils.LensMathUtils;
 import mma.pszt.utils.Line;
+import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import mma.pszt.utils.Point;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import static mma.pszt.model.LensMathUtils.*;
+import static mma.pszt.utils.LensMathUtils.*;
 
 
 /**
  * @author Maciej Jagiello
+ * @author Maciej Kucharski
  */
 public class LensMathUtilsTest {
 
     private static final Logger logger = Logger.getLogger(LensMathUtils.class.getName());
 
-    static{
+    static {
         PropertyConfigurator.configure("log4j.properties");
     }
 
@@ -72,9 +74,9 @@ public class LensMathUtilsTest {
     }
 
     @Test
-    public void testIncidencePointCalculation1(){
-        Line l1 = Mockito.mock ( Line.class );
-        Line l2 = Mockito.mock ( Line.class );
+    public void testIncidencePointCalculation1() {
+        Line l1 = Mockito.mock(Line.class);
+        Line l2 = Mockito.mock(Line.class);
         //horizontal
         Mockito.when(l1.getA()).thenReturn(0.0);
         Mockito.when(l1.getB()).thenReturn(-1.0);
@@ -83,13 +85,13 @@ public class LensMathUtilsTest {
         Mockito.when(l2.getA()).thenReturn(-1.0);
         Mockito.when(l2.getB()).thenReturn(0.0);
         Mockito.when(l2.getC()).thenReturn(-1.0);
-        Assert.assertEquals( 0 , calculateIncidenceAngle(l1 , l2) , 0.01 );
+        Assert.assertEquals(0, calculateIncidenceAngle(l1, l2), 0.01);
     }
 
     @Test
-    public void testIncidencePointCalculation2(){
-        Line l1 = Mockito.mock ( Line.class );
-        Line l2 = Mockito.mock ( Line.class );
+    public void testIncidencePointCalculation2() {
+        Line l1 = Mockito.mock(Line.class);
+        Line l2 = Mockito.mock(Line.class);
 
         Mockito.when(l1.getA()).thenReturn(1.0);
         Mockito.when(l1.getB()).thenReturn(1.0);
@@ -99,13 +101,13 @@ public class LensMathUtilsTest {
         Mockito.when(l2.getB()).thenReturn(0.0);
         Mockito.when(l2.getC()).thenReturn(4.0);
         //expected angle - 45 degrees
-        Assert.assertEquals(  Math.PI / 4 , calculateIncidenceAngle(l1 , l2)  , 0.01 );
+        Assert.assertEquals(Math.PI / 4, calculateIncidenceAngle(l1, l2), 0.01);
     }
 
     @Test
-    public void testIncidencePointCalculation3(){
-        Line l1 = Mockito.mock ( Line.class );
-        Line l2 = Mockito.mock ( Line.class );
+    public void testIncidencePointCalculation3() {
+        Line l1 = Mockito.mock(Line.class);
+        Line l2 = Mockito.mock(Line.class);
 
         Mockito.when(l1.getA()).thenReturn(-1.0);
         Mockito.when(l1.getB()).thenReturn(1.0);
@@ -115,66 +117,63 @@ public class LensMathUtilsTest {
         Mockito.when(l2.getB()).thenReturn(1.0);
         Mockito.when(l2.getC()).thenReturn(4.0);
         //expected angle - 90 degrees
-        Assert.assertEquals(  0 , calculateIncidenceAngle(l1 , l2)  , 0.01 );
+        Assert.assertEquals(0, calculateIncidenceAngle(l1, l2), 0.01);
     }
 
     @Test
-    public void testIncidencePointCalculation4(){
+    public void testIncidencePointCalculation4() {
 //        thinking about sth non-trivial...
-        Line l1 = Mockito.mock ( Line.class );
-        Line l2 = Mockito.mock ( Line.class );
+        Line l1 = Mockito.mock(Line.class);
+        Line l2 = Mockito.mock(Line.class);
 
         Mockito.when(l2.getA()).thenReturn(1.0);
         Mockito.when(l2.getB()).thenReturn(-1.0);
         Mockito.when(l2.getC()).thenReturn(3.0);
 
-        Mockito.when(l1.getA()).thenReturn( Math.tan( Math.PI / 12));
+        Mockito.when(l1.getA()).thenReturn(Math.tan(Math.PI / 12));
         Mockito.when(l1.getB()).thenReturn(-1.0);
         Mockito.when(l1.getC()).thenReturn(3.0);
         //expected angle -
-        Assert.assertEquals( Math.PI/3  , calculateIncidenceAngle(l1 , l2)  , 0.01 );
+        Assert.assertEquals(Math.PI / 3, calculateIncidenceAngle(l1, l2), 0.01);
     }
 
     @Test
-    public void testRefractedLineEquationCalculation1(){
+    public void testRefractedLineEquationCalculation1() {
 //        thinking about sth non-trivial...
-        Point p = Mockito.mock( Point.class );
-        double angle = Math.PI/4;
+        Point p = Mockito.mock(Point.class);
+        double angle = Math.PI / 4;
 
-        Mockito.when( p.getX()).thenReturn( 4.0 ) ;
-        Mockito.when( p.getY()).thenReturn( 0.0 ) ;
+        Mockito.when(p.getX()).thenReturn(4.0);
+        Mockito.when(p.getY()).thenReturn(0.0);
 
         //expected: tan45 X - y + C
-        Line calculated = calculateRefractedLine( angle , p);
+        Line calculated = calculateRefractedLine(angle, p);
         //a factor
         Assert.assertEquals(Math.tan(3 * Math.PI / 4), calculated.getA(), 0.01);
-        Assert.assertEquals( -1.0 , calculated.getB() , 0.01 );
+        Assert.assertEquals(-1.0, calculated.getB(), 0.01);
     }
 
     @Test
-    public void testComputingDistanceOfPointFromLine(){
-        Point p = Mockito.mock( Point.class );
-        Line l = Mockito.mock ( Line.class );
+    public void testComputingDistanceOfPointFromLine() {
+        Point p = Mockito.mock(Point.class);
+        Line l = Mockito.mock(Line.class);
 
-        Mockito.when( p.getX()).thenReturn(2.0);
-        Mockito.when( p.getY()).thenReturn(3.0);
+        Mockito.when(p.getX()).thenReturn(2.0);
+        Mockito.when(p.getY()).thenReturn(3.0);
 
-        Mockito.when( l.getA()).thenReturn(1.0);
-        Mockito.when( l.getB()).thenReturn(-1.0);
-        Mockito.when( l.getC()).thenReturn(3.0);
+        Mockito.when(l.getA()).thenReturn(1.0);
+        Mockito.when(l.getB()).thenReturn(-1.0);
+        Mockito.when(l.getC()).thenReturn(3.0);
 
         //expected: sqrt(2)
         Assert.assertEquals(Math.sqrt(2), computePointsDistance(p, l), 0.01);
     }
 
     @Test
-    public void refractionTest(){
-//        Line l1 = new Line(new Point(0.0,0.0),new Point(1.0,0.0));
-        //Line{-0.0x+-1.0y+145.0=0} => Line{-2.22x+-1.0y+84.4=0}
-        Line l1 = new Line( 0.0, -1.0, 145.0);
-//        Line l2 = new Line(new Point( 1.0, 1.0) , new Point( 2.0, 0.0 ));
-        Line l2 = new Line( -2.22, -1.0, 84.4);
-        Line l3 = getRefractedLine(l1,l2, 1.0 , 1.4);
+    public void refractionTest() {
+        Line l1 = new Line(0.0, -1.0, 145.0);
+        Line l2 = new Line(-2.22, -1.0, 84.4);
+        Line l3 = getRefractedLine(l1, l2, 1.0, 1.4);
         logger.debug("Received line:" + l3.toString());
     }
 }

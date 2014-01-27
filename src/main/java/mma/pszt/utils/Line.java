@@ -9,7 +9,6 @@ package mma.pszt.utils;/**
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 
 /**
@@ -27,19 +26,19 @@ public class Line {
 
     /**
      * Crates new line based on two points.
+     *
      * @param p1 starting point
      * @param p2 ending point
      */
-    public Line(Point p1 , Point p2){
+    public Line(Point p1, Point p2) {
 
         //this means angle with OX is 90 degrees
-        if(p2.getX() == p1.getX()){
+        if (p2.getX() == p1.getX()) {
             this.a = 1;
             this.b = 0;
             this.c = -p2.getX();
-        }
-        else{
-            this.a = (double)(p1.getY()-p2.getY()) / (p1.getX() - p2.getX());
+        } else {
+            this.a = (double) (p1.getY() - p2.getY()) / (p1.getX() - p2.getX());
             this.b = -1;
             this.c = p2.getY() - this.a * p2.getX();
         }
@@ -47,23 +46,25 @@ public class Line {
 
     /**
      * Creates new line based on given point and factors of normal vector.
+     *
      * @param p point which is contained by line
      * @param A x factor od normal vector
      * @param B y factor of normal vector
      */
-    public Line( Point p , double A, double B){
+    public Line(Point p, double A, double B) {
         logger.debug("Creating new line with entry: Point=" + p.toString() + " a=" + A + " B=" + B);
         this.a = A;
         this.b = B;
-        this.c = -A*p.getX() - B*p.getY();
+        this.c = -A * p.getX() - B * p.getY();
         logger.debug("Got line " + this.toString());
     }
 
     /**
      * Constructor creating copy of line. (not working)
+     *
      * @param l line to be copied
      */
-    public Line( Line l ){
+    public Line(Line l) {
         this.a = l.a;
         this.b = l.b;
         this.c = l.c;
@@ -71,6 +72,7 @@ public class Line {
 
     /**
      * Get value of function from x value.
+     *
      * @param x parameter of function
      * @return y value of function
      */
@@ -80,11 +82,12 @@ public class Line {
 
     /**
      * Creates new line with scaled factors.
+     *
      * @param p level of scaling
      * @return
      */
-    public void scaleFactors ( double p ) {
-        logger.debug("Scaling for: " + this.toString() +" with parameter " + p);
+    public void scaleFactors(double p) {
+        logger.debug("Scaling for: " + this.toString() + " with parameter " + p);
 
         this.a *= p;
         this.b *= p;
