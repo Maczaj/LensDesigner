@@ -17,7 +17,7 @@ class LensFrame extends JFrame
     public LensFrame(final EvaluatedLens lens)
     {
         this.lens = lens;
-        setSize(400 + 20, 400 + 40);
+        setSize(700 + 20, 500 + 40);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Interactive lens designer");
         

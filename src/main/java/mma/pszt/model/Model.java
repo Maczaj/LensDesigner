@@ -15,6 +15,7 @@ public class Model {
     @Setter
     private Parameters parameters;
     @Getter
+    @Setter
     private EvaluatedLens lens;
     private double sigma;
     private List<Integer> lastLensChoices = new LinkedList<>();
@@ -23,16 +24,8 @@ public class Model {
     private final double c1 = 0.82;
     private final double c2 = 1.2;
 
-//    public Model() {
-//        sigma = 1;
-//        this.parameters = new Parameters(0, 0, 0.0, 0.0, 0.0);
-//        this.lens = new EvaluatedLens(new Lens(), parameters);
-//    }
-
-    public Model(Parameters parameters) {
+    public Model() {
         sigma = 2;
-        this.parameters = parameters;
-        this.lens = new EvaluatedLens(new Lens(), parameters);
     }
 
     public int nextIteration() {
@@ -69,8 +62,7 @@ public class Model {
             lastLensChoices.clear();
         }
 
-        //TODO zmienic nazwe tej funkcji i parametru tez!!! Np na minSigma or sth like that
-        if( sigma < parameters.getMutationRate() ){
+        if( sigma < parameters.getMinimumSigma() ){
             return -1;
         }
 

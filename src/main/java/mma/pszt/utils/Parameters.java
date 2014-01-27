@@ -15,11 +15,10 @@ public class Parameters {
     private Integer numberOfRays;
     private Double refractiveIndex;
     private Double focusingAccuracy;
-    private Double mutationRate;
+    private Double minimumSigma;
 
     public Parameters()
     {
-
     }
 
     public boolean checkIfParamsCorrect()
@@ -27,7 +26,8 @@ public class Parameters {
         return numberOfPoints != null &&
                 numberOfRays != null &&
                 focusingAccuracy != null &&
-                refractiveIndex != null;
+                refractiveIndex != null &&
+                minimumSigma != null;
     }
 
     @Override

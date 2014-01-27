@@ -2,13 +2,13 @@ package mma.pszt.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import mma.pszt.utils.LensMathUtils;
 import mma.pszt.utils.Line;
 import mma.pszt.utils.Parameters;
 import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 
 import java.util.*;
-import java.util.concurrent.Exchanger;
 
 /**
  * Lens with rays, evaluated score and calculated intersection points
@@ -20,6 +20,7 @@ public class EvaluatedLens {
     private static final Logger logger = Logger.getLogger(EvaluatedLens.class.getName());
     private final Set<Ray> rays;
     private final Lens lens;
+    private final Parameters parameters;
     private List<Point> leftSidePoints;
     private List<Point> rightSidePoints;
     @Setter
@@ -28,6 +29,7 @@ public class EvaluatedLens {
     public EvaluatedLens(final Lens lens, Parameters parameters) {
         System.out.println("Evaluated Lens with previous lens");
         System.out.println(parameters);
+        this.parameters = parameters;
         this.lens = lens;
         this.rays = new HashSet<>();
         score = 0;
@@ -44,7 +46,7 @@ public class EvaluatedLens {
             Line lensLine = null;
             Point intersectionPoint = null;
             // znajdź segment soczewki z którym promień się krzyżuje
-            for (int j = 0; j < Lens.POINTS_QUANTITY - 1; j++) {
+            for (int j = 0; j < parameters.getNumberOfPoints() - 1; j++) {
                 Point lensPoint1 = leftSidePoints.get(j);
                 Point lensPoint2 = leftSidePoints.get(j+1);
                 lensLine = new Line(lensPoint1, lensPoint2);
@@ -77,7 +79,7 @@ public class EvaluatedLens {
             Line rightLensLine = null;
             Point rightIntersectionPoint = null;
             // powtórz dwa poprzednie punkty dla drugiej części soczewki
-            for (int j = 0; j < Lens.POINTS_QUANTITY - 1; j++) {
+            for (int j = 0; j < parameters.getNumberOfPoints() - 1; j++) {
                 Point lensPoint1 = rightSidePoints.get(j);
                 Point lensPoint2 = rightSidePoints.get(j+1);
                 rightLensLine = new Line(lensPoint1, lensPoint2);
@@ -130,31 +132,10 @@ public class EvaluatedLens {
                 || lensPoint2.getY() <= intersectionPoint.getY() && intersectionPoint.getY() <= lensPoint1.getY());
     }
 
-    public EvaluatedLens(Parameters parameters) {
-        System.out.println("Evaluated Lens with new lens");
-        this.lens = new Lens();
-        this.rays = new HashSet<Ray>();
-//        this.rays.add(new Ray());
-//        this.intersectionPoints = new HashSet<Point>();
-//        this.intersectionPoints.add(new Point(3.0,4.0));
-//        this.intersectionPoints.add(new Point(6.0,-4.0));
-//        this.intersectionPoints.add(new Point(-2.0,-4.0));
-        for (int i = 0; i < parameters.getNumberOfRays(); i++) {
-            List rayPoints = new ArrayList<>();
-            rayPoints.add(new Point(-Lens.BASE_DISTANCE * 2, (i * Lens.LENS_HEIGHT) / parameters.getNumberOfRays()));
-            rayPoints.add(new Point(+Lens.BASE_DISTANCE * 2, (i * Lens.LENS_HEIGHT) / parameters.getNumberOfRays()));
-//            rayPoints.add(new Point( , ));
-//            rayPoints.add(new Point( , ));
-//            rayPoints.add(new Point( , ));
-            Ray ray = new Ray(rayPoints);
-            this.rays.add(ray);
-        }
-    }
-
     private List<Point> evaluateLensPoints(int [] lensSegments) {
         List<Point> lensPoints = new ArrayList<>();
-        for (int i = 0; i < Lens.POINTS_QUANTITY; ++i) {
-            lensPoints.add(new Point(lensSegments[i], (Lens.LENS_HEIGHT * i * 1.0) / Lens.POINTS_QUANTITY ));
+        for (int i = 0; i < parameters.getNumberOfPoints(); ++i) {
+            lensPoints.add(new Point(lensSegments[i], (Lens.LENS_HEIGHT * i * 1.0) / parameters.getNumberOfPoints() ));
         }
         return lensPoints;
     }

@@ -8,6 +8,8 @@ import org.apache.log4j.Logger;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
 
@@ -16,11 +18,35 @@ public class LensPanel extends JPanel {
 
     private int numberLensToPaint;
 
+    JPanel jPanel = new JPanel();
+    JButton buttonPause = new JButton ("Pause!");
+
+    JPanel jPanelTextFieldOne = new JPanel (new FlowLayout());
+    JLabel l1 = new JLabel("Generation: 0");
+
     private EvaluatedLens lens;
 
     public LensPanel(EvaluatedLens lens)
     {
         this.lens = lens;
+        jPanel.setBackground(Color.black);
+
+        jPanelTextFieldOne.setBackground(Color.black);
+        l1.setForeground(Color.WHITE);
+        jPanelTextFieldOne.add(l1);
+
+        jPanel.add(buttonPause);
+        this.add(jPanel);
+        this.add(jPanelTextFieldOne);
+
+        buttonPause.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            Waiter.getInstance().changeWait();
+
+            }
+        });
     }
 
 
@@ -31,6 +57,8 @@ public class LensPanel extends JPanel {
 
 
         this.setBackground(Color.BLACK);
+
+        l1.setText("Generation: "+lens.getLens().getNoGeneration());
 
         g.setColor(Color.GRAY);
         System.out.println("to jest do namalowania");
