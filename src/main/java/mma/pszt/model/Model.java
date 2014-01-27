@@ -19,7 +19,7 @@ public class Model {
     private EvaluatedLens lens;
     private double sigma;
     private List<Integer> lastLensChoices = new LinkedList<>();
-//    private int noGeneration = 1;
+    //    private int noGeneration = 1;
     private final int stepsToChangeSigma = 10; // m ze skryptu
     private final double c1 = 0.82;
     private final double c2 = 1.2;
@@ -31,7 +31,7 @@ public class Model {
     public int nextIteration() {
         EvaluatedLens newLens = new EvaluatedLens(new Lens(lens.getLens(), sigma), parameters);
         int score = lens.getScore();
-        if ( score >= newLens.getScore()) {
+        if (score >= newLens.getScore()) {
             score = newLens.getScore();
             lens = newLens;
             lastLensChoices.add(1);
@@ -41,7 +41,7 @@ public class Model {
 
         int noGeneration = lens.getLens().getNoGeneration();
         //test if lens is good enough
-        if(score <= parameters.getFocusingAccuracy()){
+        if (score <= parameters.getFocusingAccuracy()) {
             return noGeneration;
         }
 
@@ -62,12 +62,12 @@ public class Model {
             lastLensChoices.clear();
         }
 
-        if( sigma < parameters.getMinimumSigma() ){
+        if (sigma < parameters.getMinimumSigma()) {
             return -1;
         }
 
 //        noGeneration++;
-        logger.info("Generation no. " +noGeneration + ", current sigma: " + sigma + " target function value: " + score);
+        logger.info("Generation no. " + noGeneration + ", current sigma: " + sigma + " target function value: " + score);
         return 0;
     }
 }

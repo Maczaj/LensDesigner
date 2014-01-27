@@ -10,12 +10,10 @@ import org.apache.log4j.Logger;
 
 public class Controller {
 
-    //view
     private final View view;
     private Model model;
 
     private static final Logger logger = Logger.getLogger(Controller.class.getName());
-
 
     public Controller() {
         this.view = new View();
@@ -39,8 +37,6 @@ public class Controller {
         model.setLens(lens);
 
         while (true) {
-
-
             Waiter.getInstance().stop();
             try {
                 while (model.getLens() == null)
@@ -57,17 +53,15 @@ public class Controller {
 
             int generationResult = model.nextIteration();
 
-            if( generationResult < 0 ){
+            if (generationResult < 0) {
                 logger.info("Simulation finished without result!");
                 System.exit(0);
-            }
-            else if( generationResult > 0 ){
+            } else if (generationResult > 0) {
                 logger.info("Simulation finished with result in generation no. " + generationResult + " with score " + model.getLens().getScore());
-                try{
+                try {
                     Thread.sleep(20000);
-                }
-                catch(Exception e){
-                    //be silent like a ninja...
+                } catch (Exception e) {
+                    System.err.println(e);
                 }
 
                 System.exit(0);
@@ -78,5 +72,4 @@ public class Controller {
             view.drawView();
         }
     }
-
 }

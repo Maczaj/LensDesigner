@@ -2,7 +2,6 @@ package mma.pszt.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 
@@ -19,7 +18,6 @@ public class Lens {
     static final int BASE_DISTANCE = 30;
     @Getter
     int pointsQuantity;
-   // static final int POINTS_QUANTITY = 100;
     static final int LENS_HEIGHT = 200;
     @Getter
     private final int[] leftSidePoints;
@@ -39,7 +37,7 @@ public class Lens {
         noGeneration = 0;
 
         for (int i = 0; i < pointsQuantity; ++i) {
-            this.leftSidePoints[i] = - BASE_DISTANCE;
+            this.leftSidePoints[i] = -BASE_DISTANCE;
             this.rightSidePoints[i] = BASE_DISTANCE;
         }
     }
@@ -71,7 +69,6 @@ public class Lens {
             rightSidePoints[i] = (point + (int) (sigma * rand.nextGaussian()));
             i++;
         }
-
     }
 
     @Override
@@ -88,31 +85,4 @@ public class Lens {
         }
         return sb.toString();
     }
-
-    private List<LensSegment> getSegments(final int[] side) {
-        List<LensSegment> lst = new ArrayList<LensSegment>();
-        double stepSize = (double) LENS_HEIGHT / (double) pointsQuantity;
-
-        for (int i = 0; i < side.length - 1; ++i) {
-            Point first = new Point(side[i], (int) (i * stepSize));
-            Point second = new Point(side[i + 1], (int) ((i + 1) * stepSize));
-
-            lst.add(new LensSegment(first, second));
-        }
-        return lst;
-    }
-
-//    /**
-//     * @return list of lens left-side segments.
-//     */
-//    public List<LensSegment> getLeftSegments() {
-//        return getSegments(leftSidePoints);
-//    }
-//
-//    /**
-//     * @return list of lens right-side segments.
-//     */
-//    public List<LensSegment> getRightSegments() {
-//        return getSegments(rightSidePoints);
-//    }
 }

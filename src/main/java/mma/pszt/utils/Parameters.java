@@ -7,7 +7,9 @@ import lombok.Setter;
 /**
  * @author Arkadiusz Szlachetka
  */
-@Getter @Setter @AllArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class Parameters {
 
 
@@ -17,12 +19,10 @@ public class Parameters {
     private Double focusingAccuracy;
     private Double minimumSigma;
 
-    public Parameters()
-    {
+    public Parameters() {
     }
 
-    public boolean checkIfParamsCorrect()
-    {
+    public boolean checkIfParamsCorrect() {
         return numberOfPoints != null &&
                 numberOfRays != null &&
                 focusingAccuracy != null &&
