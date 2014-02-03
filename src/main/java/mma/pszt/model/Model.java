@@ -26,46 +26,14 @@ public class Model {
     public Model() {
         sigma = 2;
     }
-
+    
+    /**
+     * Next iteration of mi + lambda algorithm
+     * @return generation number, if satisfying lens is detected, 0 otherwise
+     */
     public int nextIteration() {
         EvaluatedLens newLens = new EvaluatedLens(new Lens(lens.getLens(), sigma), parameters);
-        int score = lens.getScore();
-        if (score >= newLens.getScore()) {
-            score = newLens.getScore();
-            lens = newLens;
-            lastLensChoices.add(1);
-        } else {
-            lastLensChoices.add(0);
-        }
 
-        int noGeneration = lens.getLens().getNoGeneration();
-        //test if lens is good enough
-        if (score <= parameters.getFocusingAccuracy()) {
-            return noGeneration;
-        }
-
-        assert (lastLensChoices.size() <= 10);
-        int count = 0;
-        for (Integer it : lastLensChoices) {
-            if (it == 1) {
-                count++;
-            }
-        }
-        if (noGeneration % stepsToChangeSigma == 0) {
-            double ro = (count * 1.0) / stepsToChangeSigma;
-            if (ro < 0.2) {
-                sigma = c1 * sigma;
-            } else if (ro > 0.2) {
-                sigma = c2 * sigma;
-            }
-            lastLensChoices.clear();
-        }
-
-        if (sigma < parameters.getMinimumSigma()) {
-            return -1;
-        }
-
-        logger.info("Generation no. " + noGeneration + ", current sigma: " + sigma + " target function value: " + score);
         return 0;
     }
 }

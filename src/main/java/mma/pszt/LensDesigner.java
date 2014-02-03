@@ -12,6 +12,7 @@ public class LensDesigner {
 
     public static void main(String[] args) {
         PropertyConfigurator.configure("log4j.properties");
+        logger.info("I'm working...");
         Controller aa = new Controller();
         aa.start();
     }

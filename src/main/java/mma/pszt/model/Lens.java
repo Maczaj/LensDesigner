@@ -2,11 +2,8 @@ package mma.pszt.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import mma.pszt.utils.Point;
 import org.apache.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 /**
