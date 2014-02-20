@@ -20,4 +20,18 @@ public interface Individual {
 	 * @return fitness of this individual
 	 */
 	public int getScore();
+	
+	/**
+	 * @param mutationFactor - factor of mutation
+	 * @return mutated individual
+	 */
+	//TODO: zdecydowac czy zostawic tak (po kazdym wywolaniu trzeba bedzie rzutowac wynik na odpowiedni typ), czy moze wprowadzic generyka
+	public Individual mutateIndividual( double mutationFactor ); 
+	
+	/**
+	 * (not needed for OnePlusOneMethod)
+	 * @param other - second individual used in crossover
+	 * @return crossed individual
+	 */
+	public Individual crossIndividuals ( Individual other );
 }
