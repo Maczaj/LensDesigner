@@ -1,10 +1,10 @@
 package mma.pszt.controller;
 
 import mma.algorithm.evolution.EvolutionaryAlgorithm;
+import mma.algorithm.evolution.IterationResult;
 import mma.algorithm.evolution.OnePlusOneAlgorithm;
 import mma.pszt.model.EvaluatedLens;
 import mma.pszt.model.Lens;
-import mma.pszt.model.Model;
 import mma.pszt.utils.Parameters;
 import mma.pszt.view.View;
 import mma.pszt.view.Waiter;
@@ -62,20 +62,20 @@ public class Controller {
 
             //process
             algorithm.nextIteration();
-            int generationResult = algorithm.getStatus();
+            IterationResult generationResult = algorithm.getStatus();
 
             lens = algorithm.getObject();
             view.setLens(lens);
             view.drawView();
 
-            if (generationResult < 0) {
+            if (generationResult == IterationResult.FINISHED_WITHOUT_RESULT ) {
                 logger.info("Simulation finished without result!");
                 System.exit(0);                
             }
             // TODO: w jakis sposób zaimplementować wybór, czy fitness ma byc minimalizowany czy maksymalizowany
-            generationResult = lens.getScore();
+            int score = lens.getScore();
             logger.info("Best fitness is now " + generationResult);
-            if (generationResult > params.getFocusingAccuracy() ) {
+            if (score > params.getFocusingAccuracy() ) {
                 logger.info("Simulation finished with result in generation no. " + algorithm.getIterationNo() + " with score " + generationResult);
                 try {
                     Thread.sleep(20000);

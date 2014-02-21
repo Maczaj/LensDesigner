@@ -17,9 +17,9 @@ public interface EvolutionaryAlgorithm <T extends Individual> {
 	
 	/**
 	 * Returns status of last iteration.
-	 * @return 0 if everything is OK, other values are algorithm-specific
+	 * @return IterationResult
 	 */
-	public int getStatus();
+	public IterationResult getStatus();
 	
 	/**
 	 * Return best individual from current generation.
@@ -34,7 +34,7 @@ public interface EvolutionaryAlgorithm <T extends Individual> {
 	public Set<T> getGeneration();
 	
 	/**
-	 * Returns number of last generation/iteration.
+	 * Returns last generations/iterations number.
 	 * @return
 	 */
 	public long getIterationNo();

@@ -23,7 +23,7 @@ public class OnePlusOneAlgorithm<T extends Individual> implements EvolutionaryAl
 	int fi;
 	double sigma;
 	double minSigma;
-	int lastIterationResult;
+	IterationResult lastIterationResult;
 		
 	//input parameters
 	int m;
@@ -59,7 +59,7 @@ public class OnePlusOneAlgorithm<T extends Individual> implements EvolutionaryAl
 	 */
 	@Override
 	public void nextIteration() {
-		if ( lastIterationResult == -1) {
+		if ( lastIterationResult == IterationResult.FINISHED_WITHOUT_RESULT) {
 			//minimum sigma reached, there's no point in continuation 
 			return;
 		}
@@ -92,21 +92,19 @@ public class OnePlusOneAlgorithm<T extends Individual> implements EvolutionaryAl
 		//set status of iteration by analysing value of sigma
 		if( sigma < minSigma ){
 			//minimum sigma reached
-			lastIterationResult = -1;
+			lastIterationResult = IterationResult.FINISHED_WITHOUT_RESULT;
 		}
 		else {
 			//everything OK
-			lastIterationResult = 0;
+			lastIterationResult = IterationResult.OK;
 		}		
 	}
 
 	/**
 	 * {@inheritDoc}
-	 * @return 0 when everything was OK <BR>
-	 * -1 when minimum sigma was reached
 	 */
 	@Override
-	public int getStatus() {
+	public IterationResult getStatus() {
 		return lastIterationResult;
 	}
 
