@@ -1,23 +1,28 @@
 package mma.pszt.controller;
 
+import mma.algorithm.evolution.EvolutionaryAlgorithm;
+import mma.algorithm.evolution.OnePlusOneAlgorithm;
 import mma.pszt.model.EvaluatedLens;
 import mma.pszt.model.Lens;
 import mma.pszt.model.Model;
 import mma.pszt.utils.Parameters;
 import mma.pszt.view.View;
 import mma.pszt.view.Waiter;
+
 import org.apache.log4j.Logger;
 
 public class Controller {
+	
+	
+	private static final Logger logger = Logger.getLogger(Controller.class.getName());
 
     private final View view;
-    private Model model;
-
-    private static final Logger logger = Logger.getLogger(Controller.class.getName());
+//    private Model model;
+// TODO przerobić kontroler pod nowe interfejsy
+    private EvolutionaryAlgorithm<EvaluatedLens> algorithm;
 
     public Controller() {
-        this.view = new View();
-        this.model = new Model();
+        this.view = new View();    
     }
 
     public void start() {
@@ -32,15 +37,19 @@ public class Controller {
         }
 
         EvaluatedLens lens = new EvaluatedLens(new Lens(params.getNumberOfPoints()), params);
+        this.algorithm = new OnePlusOneAlgorithm<EvaluatedLens>(lens, 1.0, 0.3, 10, 0.82, 1.2);
+        
         view.createFrame(lens);
-        model.setParameters(params);
-        model.setLens(lens);
+        boolean sth = true;
+        
 
         while (true) {
             Waiter.getInstance().stop();
             try {
-                while (model.getLens() == null)
+              if( sth ){
                     Thread.sleep(1000);
+                    sth = false;
+              }
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -51,17 +60,23 @@ public class Controller {
                 e.printStackTrace();
             }
 
-            int generationResult = model.nextIteration();
+            //process
+            algorithm.nextIteration();
+            int generationResult = algorithm.getStatus();
 
-            lens = model.getLens();
+            lens = algorithm.getObject();
             view.setLens(lens);
             view.drawView();
 
             if (generationResult < 0) {
                 logger.info("Simulation finished without result!");
-                System.exit(0);
-            } else if (generationResult > 0) {
-                logger.info("Simulation finished with result in generation no. " + generationResult + " with score " + model.getLens().getScore());
+                System.exit(0);                
+            }
+            // TODO: w jakis sposób zaimplementować wybór, czy fitness ma byc minimalizowany czy maksymalizowany
+            generationResult = lens.getScore();
+            logger.info("Best fitness is now " + generationResult);
+            if (generationResult > params.getFocusingAccuracy() ) {
+                logger.info("Simulation finished with result in generation no. " + algorithm.getIterationNo() + " with score " + generationResult);
                 try {
                     Thread.sleep(20000);
                 } catch (Exception e) {

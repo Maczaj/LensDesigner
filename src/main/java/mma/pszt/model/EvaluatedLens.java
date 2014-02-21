@@ -2,10 +2,12 @@ package mma.pszt.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import mma.algorithm.evolution.Individual;
 import mma.pszt.utils.LensMathUtils;
 import mma.pszt.utils.Line;
 import mma.pszt.utils.Parameters;
 import mma.pszt.utils.Point;
+
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -16,7 +18,7 @@ import java.util.*;
  * @author Maciej Jagiello
  */
 @Getter
-public class EvaluatedLens {
+public class EvaluatedLens implements Individual {
     private static final Logger logger = Logger.getLogger(EvaluatedLens.class.getName());
     private final Set<Ray> rays;
     private final Lens lens;
@@ -25,6 +27,7 @@ public class EvaluatedLens {
     private List<Point> rightSidePoints;
     @Setter
     private int score = 0;
+    
 
     public EvaluatedLens(final Lens lens, Parameters parameters) {
         logger.debug("Evaluated Lens with previous lens");
@@ -36,6 +39,10 @@ public class EvaluatedLens {
         rightSidePoints = evaluateLensPoints(lens.getRightSidePoints());
 
         score += evaluateScore(leftSidePoints, rightSidePoints);
+    }
+    
+    public int getScore(){
+    	return 0 - this.score;
     }
 
     private int evaluateScore(List<Point> leftSidePoints, List<Point> rightSidePoints) {
@@ -150,4 +157,20 @@ public class EvaluatedLens {
         }
         return lensPoints;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+	@Override
+	public Individual mutateIndividual(double mutationFactor) {
+		// TODO Sprawdzic czy to wszystko ( bo nie ogarniam tej klasy )
+		Lens lens = new Lens( this.lens , mutationFactor * random.nextGaussian());
+		return new EvaluatedLens(lens, parameters);
+	}
+
+	@Override
+	public Individual crossIndividuals(Individual other) {
+		// TODO Do zrobienia krzyzowanie Lensa
+		return null;
+	}
 }

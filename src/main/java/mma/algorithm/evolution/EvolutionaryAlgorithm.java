@@ -32,4 +32,10 @@ public interface EvolutionaryAlgorithm <T extends Individual> {
 	 * @return set containing generation
 	 */
 	public Set<T> getGeneration();
+	
+	/**
+	 * Returns number of last generation/iteration.
+	 * @return
+	 */
+	public long getIterationNo();
 }

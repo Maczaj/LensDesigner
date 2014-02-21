@@ -1,8 +1,9 @@
 package mma.algorithm.evolution;
 
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Set;
+
+import lombok.Getter;
 
 import org.apache.log4j.Logger;
 
@@ -16,8 +17,8 @@ public class OnePlusOneAlgorithm<T extends Individual> implements EvolutionaryAl
 	private static final Logger LOGGER = Logger.getLogger(OnePlusOneAlgorithm.class.getName());
 	
 	//internal attributes
-	Random random;
 	T individual;
+	@Getter
 	long iterationNo;
 	int fi;
 	double sigma;
@@ -31,8 +32,8 @@ public class OnePlusOneAlgorithm<T extends Individual> implements EvolutionaryAl
 	
 	
 	/**
-	 * Creates new OnePlusOneAlgorithm instance.
-	 * @param cls - Class object of class implementing Individual interface
+	 * Creates new OnePlusOneAlgorithm instance. Performs maximization of fitness, multiply your score by -1 if you want minimization.
+	 * @param indidividual - referemce to individual treated as starting point
 	 * @param startingSigma - starting value of sigma
 	 * @param minSigma - value of sigma below which simulation is not continued
 	 * @param m - number of iterations after that sigma is changed 
@@ -40,20 +41,17 @@ public class OnePlusOneAlgorithm<T extends Individual> implements EvolutionaryAl
 	 * @param c2 - multiplicator of sigma when new individual is chosen more often than 1/5 times
 	 * <BR><BR>
 	 * Suggested values: m = 10 , c1 = 0.82 , c2 = 1.2. Starting value of sigma is problem-specific.
-	 * @throws IllegalAccessException - in situation when reflective-based instantiation of cls is not possible (most probably there is no default constructor)
-	 * @throws InstantiationException - in situation when reflective-based instantiation of cls is not possible (most probably there is no default constructor)
 	 */
-	public OnePlusOneAlgorithm(Class<T> cls, double startingSigma, double minSigma, int m, double c1, double c2) throws InstantiationException, IllegalAccessException {
+	public OnePlusOneAlgorithm(T indidividual, double startingSigma, double minSigma, int m, double c1, double c2) {
 		this.sigma = startingSigma;
 		this.minSigma = minSigma;
 		this.m = m;
 		this.c1 = c1;
 		this.c2 = c2;
+		this.individual = indidividual;
 		
-		random = new Random( System.currentTimeMillis() );
 		iterationNo = 0;
 		fi = 0;
-		individual = cls.newInstance();
 	}
 
 	/**
@@ -61,12 +59,16 @@ public class OnePlusOneAlgorithm<T extends Individual> implements EvolutionaryAl
 	 */
 	@Override
 	public void nextIteration() {
+		if ( lastIterationResult == -1) {
+			//minimum sigma reached, there's no point in continuation 
+			return;
+		}
+		
 		++iterationNo;
 		LOGGER.info("Iteration No. " + iterationNo);
-		double factor = random.nextGaussian();
 		
 		//TODO: albo inaczej to przemyslec albo @SuppressWarnings (sic!)
-		T newIndividual =  (T) individual.mutateIndividual( factor * sigma) ;
+		T newIndividual =  (T) individual.mutateIndividual( sigma) ;
 		
 		if( Individual.comparator.compare(newIndividual, individual) >= 0){
 			//new individual is better or equal
